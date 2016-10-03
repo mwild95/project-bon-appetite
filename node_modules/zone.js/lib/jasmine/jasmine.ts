@@ -3,7 +3,7 @@
   // Patch jasmine's describe/it/beforeEach/afterEach functions so test code always runs
   // in a testZone (ProxyZone). (See: angular/zone.js#91 & angular/angular#10503)
   if (!Zone) throw new Error("Missing: zone.js");
-  if (!jasmine) throw new Error("Missing: jasmine.js");  
+  if (typeof jasmine == 'undefined') throw new Error("Missing: jasmine.js");  
   if (jasmine['__zone_patch__']) throw new Error("'jasmine' has already been patched with 'Zone'.");
   jasmine['__zone_patch__'] = true;
 
@@ -31,7 +31,7 @@
 
   // Monkey patch all of the jasmine DSL so that each function runs in appropriate zone.
   const jasmineEnv = jasmine.getEnv();
-  ['desribe', 'xdescribe', 'fdescribe'].forEach((methodName) => {
+  ['describe', 'xdescribe', 'fdescribe'].forEach((methodName) => {
     let originalJasmineFn: Function = jasmineEnv[methodName];
     jasmineEnv[methodName] = function(description: string, specDefinitions: Function) {
       return originalJasmineFn.call(this, description,  wrapDescribeInZone(specDefinitions));
@@ -90,7 +90,6 @@
   const QueueRunner = (jasmine as any).QueueRunner as { new(attrs: QueueRunnerAttrs): QueueRunner };
   (jasmine as any).QueueRunner = class ZoneQueueRunner extends QueueRunner {
     constructor(attrs: QueueRunnerAttrs) {
-      attrs.clearStack = (fn) => fn(); // Don't clear since onComplete will clear.
       attrs.onComplete = ((fn) => () => {
         // All functions are done, clear the test zone.
         testProxyZone = null;
@@ -102,7 +101,16 @@
     execute() {
       if(Zone.current !== ambientZone) throw new Error("Unexpected Zone: " + Zone.current.name);
       testProxyZone = ambientZone.fork(new ProxyZoneSpec());
-      super.execute();
+      if (!Zone.currentTask) {
+        // if we are not running in a task then if someone would register a
+        // element.addEventListener and then calling element.click() the
+        // addEventListener callback would think that it is the top most task and would
+        // drain the microtask queue on element.click() which would be incorrect.
+        // For this reason we always force a task when running jasmine tests.
+        Zone.current.scheduleMicroTask('jasmine.execute().forceTask', () => super.execute());
+      } else {
+        super.execute();
+      }
     }
   };
 })();
