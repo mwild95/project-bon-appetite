@@ -1,0 +1,4 @@
+<h1>Restaurant List</h1>
+<ul>
+	<li *ngFor="let restaurant of restaurants; let r = index;"><a (click)="selectRestaurant(restaurant)">{{restaurant.getName()}}</a></li>
+</ul>

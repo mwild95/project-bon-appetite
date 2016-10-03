@@ -1,33 +1,40 @@
 import { Injectable } from '@angular/core';
-import { LoginService } from './login.service'; 
+
+import { User } from '../user/user';
 
 @Injectable()
 export class UserService {
-
 	loggedIn : boolean = false;
-	username : string = "Test";
-	password : string = "";
+    user : User = new User("admin", "admin");
+    redirectUrl: string;
 
-	constructor( ) {
-		
-	}
+    constructor( ) {
 
-	login ( username : string, password : string ) {
-		//this.loggedIn = loginService.login( username, password );
+    }
 
-		return loggedIn;
-	}
+    login ( user : User ) {
+        this.loggedIn = this.user.isTheSameAs( user );
+        return this.loggedIn;
+    }
 
-	logout ( ) {
-		this.loggedIn = false;
-	}
+    logout ( ) {
+        this.loggedIn = false;
+    }
 
-	getUsername ( ) {
-		return this.username;
-	}
+    getUsername ( ) {
+        return this.user.getUsername();
+    }
 
-	//need to return a user token rather than the password
-	getUserToken ( ) {
-		return this.password;
-	}
+    isAuthenticated ( ) {
+    	return this.loggedIn;
+    }
+
+    setRedirect( url: string ) {
+        this.redirectUrl = url;
+    }
+
+    getRedirectUrl ( ) {
+        return this.redirectUrl;
+    }
+    
 }

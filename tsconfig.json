@@ -4,7 +4,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "./build",
+    "outDir": "app",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,

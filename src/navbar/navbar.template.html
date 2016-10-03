@@ -1,0 +1,24 @@
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+    	<div class="navbar-header">
+      		<a class="navbar-brand" routerLink="/dashboard" *ngIf="userService.isAuthenticated()">
+      			Bon Appetite
+      		</a>
+          <a class="navbar-brand" routerLink="/" *ngIf="!userService.isAuthenticated()">
+            Bon Appetite
+          </a>
+  	  	</div>
+  	  	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      		<ul class="nav navbar-nav">
+        		<li><a routerLink="/manage">Manage</a></li>
+        		<li><a href="javascript:;">Link</a></li>
+      		</ul>
+      
+      		<ul class="nav navbar-nav navbar-right">
+        		<li><a routerLink="/user" *ngIf="userService.isAuthenticated()">Account</a></li>
+            <li><a routerLink="/login" *ngIf="!userService.isAuthenticated()">Login</a></li>
+            <li><a (click)="logout()" *ngIf="userService.isAuthenticated()">Logout</a></li>
+          	</ul>
+    	</div>
+	</div>
+</nav>

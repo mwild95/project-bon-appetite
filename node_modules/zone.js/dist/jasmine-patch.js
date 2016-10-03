@@ -55,7 +55,7 @@
 	    // in a testZone (ProxyZone). (See: angular/zone.js#91 & angular/angular#10503)
 	    if (!Zone)
 	        throw new Error("Missing: zone.js");
-	    if (!jasmine)
+	    if (typeof jasmine == 'undefined')
 	        throw new Error("Missing: jasmine.js");
 	    if (jasmine['__zone_patch__'])
 	        throw new Error("'jasmine' has already been patched with 'Zone'.");
@@ -83,7 +83,7 @@
 	    var testProxyZone = null;
 	    // Monkey patch all of the jasmine DSL so that each function runs in appropriate zone.
 	    var jasmineEnv = jasmine.getEnv();
-	    ['desribe', 'xdescribe', 'fdescribe'].forEach(function (methodName) {
+	    ['describe', 'xdescribe', 'fdescribe'].forEach(function (methodName) {
 	        var originalJasmineFn = jasmineEnv[methodName];
 	        jasmineEnv[methodName] = function (description, specDefinitions) {
 	            return originalJasmineFn.call(this, description, wrapDescribeInZone(specDefinitions));
@@ -127,7 +127,6 @@
 	    jasmine.QueueRunner = (function (_super) {
 	        __extends(ZoneQueueRunner, _super);
 	        function ZoneQueueRunner(attrs) {
-	            attrs.clearStack = function (fn) { return fn(); }; // Don't clear since onComplete will clear.
 	            attrs.onComplete = (function (fn) { return function () {
 	                // All functions are done, clear the test zone.
 	                testProxyZone = null;
@@ -136,10 +135,21 @@
 	            _super.call(this, attrs);
 	        }
 	        ZoneQueueRunner.prototype.execute = function () {
+	            var _this = this;
 	            if (Zone.current !== ambientZone)
 	                throw new Error("Unexpected Zone: " + Zone.current.name);
 	            testProxyZone = ambientZone.fork(new ProxyZoneSpec());
-	            _super.prototype.execute.call(this);
+	            if (!Zone.currentTask) {
+	                // if we are not running in a task then if someone would register a
+	                // element.addEventListener and then calling element.click() the
+	                // addEventListener callback would think that it is the top most task and would
+	                // drain the microtask queue on element.click() which would be incorrect.
+	                // For this reason we always force a task when running jasmine tests.
+	                Zone.current.scheduleMicroTask('jasmine.execute().forceTask', function () { return _super.prototype.execute.call(_this); });
+	            }
+	            else {
+	                _super.prototype.execute.call(this);
+	            }
 	        };
 	        return ZoneQueueRunner;
 	    }(QueueRunner));
