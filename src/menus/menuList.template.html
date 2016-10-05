@@ -1,0 +1,4 @@
+<h1>Menu List</h1>
+<ul>
+	<li *ngFor="let menu of menus; let r = index;"><a (click)="selectMenu(menu)">{{menu.getName()}}</a></li>
+</ul>

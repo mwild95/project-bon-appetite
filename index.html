@@ -11,6 +11,7 @@
     <script src="node_modules/reflect-metadata/Reflect.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css"></link>
     <!-- 2. Configure SystemJS -->
@@ -18,8 +19,9 @@
     <script>
       System.import('app').catch(function(err){ console.error(err); });
     </script>
+    <base href="/">
   </head>
-  <base href="/">
+  
   <!-- 3. Display the application -->
   <body>
     <app>

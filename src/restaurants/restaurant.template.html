@@ -6,6 +6,11 @@
       <div class="form-group">
         <label for="rest_name">Restaurant Name</label>
         <input type="text" class="form-control" id="rest_name" [(ngModel)]="restaurant.name" name="rest_name" required>
+
+     	<label for="rest_menu">Menu</label>
+     	<h3 id="rest_menu" name="rest_menu" *ngIf="!restaurant.menu || restaurant.menu == 'null'">No Menu Set</h3>
+     	<h3 id="rest_menu" name="rest_menu" *ngIf="restaurant.menu">{{restaurant.menu.name}}</h3>
+      <button type="button" class="btn btn-default" (click)="openMenuPickerModal()">Change</button>
       </div>
 
       <button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
@@ -13,3 +18,21 @@
 
     </form>
 </div>
+
+
+
+<modal #menuPickerModal>
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Choose a Menu for this Restaurant</h4>
+    </modal-header>
+    <modal-body>
+        <select class="form-control" id="activeMenu" required [(ngModel)]="currentlySelectedMenu">
+          <option value="undefined">No Menu</option>
+          <option *ngFor="let menu of availableMenus" [ngValue]="menu">{{menu.name}}</option>
+        </select>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
+        <button type="button" class="btn btn-default" (click)="selectMenu()">Select</button>
+    </modal-footer>
+</modal>
