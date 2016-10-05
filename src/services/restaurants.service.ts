@@ -7,7 +7,7 @@ import { Menu } from '../classes/Menu';
 @Injectable()
 export class RestaurantsService {
 
-    mockRestaurants: Restaurant[] = [ new Restaurant("1","Test Rest 1"), new Restaurant("2","Test Rest 2") ];
+    mockRestaurants: Restaurant[] = [ new Restaurant("0","Test Rest 1"), new Restaurant("1","Test Rest 2") ];
 
     constructor( ) {
 
@@ -15,6 +15,12 @@ export class RestaurantsService {
 
     getRestaurants ( ) {
         return this.mockRestaurants;
+    }
+
+    createRestaurant ( restaurantName: string ) {
+        console.log("Need to implement the add restaurant rest call");
+        this.mockRestaurants.push( new Restaurant(this.mockRestaurants.length.toString(), restaurantName ));
+        return this.mockRestaurants[this.mockRestaurants.length-1];
     }
 
     updateRestaurant ( restToUpdate: Restaurant ) {

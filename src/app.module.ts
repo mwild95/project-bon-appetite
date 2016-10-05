@@ -19,6 +19,8 @@ import { CanActivateViaUserService } from './guards/loggedin.guard';
 
 import { AppComponent }  from './app.component';
 import { HomeComponent } from './home.component';
+
+
  
 @NgModule({
   imports:      [ BrowserModule, FormsModule, routing, NavbarModule, ModalModule ],
