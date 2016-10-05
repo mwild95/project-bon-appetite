@@ -13,7 +13,6 @@ export class CanActivateViaUserService implements CanActivate {
   	if ( this.userService.isAuthenticated() ) { return true; }
 
   	this.userService.setRedirect( state.url );
-  	console.log(state.url);
 
   	this.router.navigate(['/login']);
   	return false;
