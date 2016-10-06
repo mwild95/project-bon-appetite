@@ -28,6 +28,9 @@ export class RestaurantComponent {
 
 	@ViewChild('menuPickerModal')
 	menuPickerModal: ModalComponent;
+
+	@ViewChild('deleteRestaurantModal')
+	deleteRestaurantModal: ModalComponent;
 	
 	constructor ( private route : ActivatedRoute, private cache : CacheService, private router : Router, private MenuService : MenuService, private RestaurantsService: RestaurantsService ) {
 
@@ -80,6 +83,17 @@ export class RestaurantComponent {
 		
 		this.restaurant.setMenu( this.currentlySelectedMenu );
 		this.menuPickerModal.close();
+	}
+	/////////////////////////////////////////////////
+
+	//Delete Restaurant modal stuff//////////////////
+	confirmDelete ( ) {
+		this.deleteRestaurantModal.open();
+	}
+
+	deleteRestaurant ( ) {
+		this.RestaurantsService.deleteRestaurant( this.restaurant.getId() );
+		this.onFinish();
 	}
 	/////////////////////////////////////////////////
 

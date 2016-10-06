@@ -2,6 +2,7 @@
 
 <div class="container">
     <h2>Manage "{{restaurant.getName()}}"</h2>
+    <button type="button" class="btn btn-danger" (click)="confirmDelete()">Delete</button>
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <div class="form-group">
         <label for="rest_name">Restaurant Name</label>
@@ -34,5 +35,18 @@
     <modal-footer>
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
         <button type="button" class="btn btn-default" (click)="selectMenu()">Select</button>
+    </modal-footer>
+</modal>
+
+<modal #deleteRestaurantModal>
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Are you sure?</h4>
+    </modal-header>
+    <modal-body>
+        <h2>Are you sure you want to delete {{restaurant.name}}</h2>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
+        <button type="button" class="btn btn-default" (click)="deleteRestaurant()">Delete</button>
     </modal-footer>
 </modal>

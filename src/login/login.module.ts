@@ -5,10 +5,12 @@ import { Router } from '@angular/router';
 
 import { LoginComponent }  from './login.component';
 
+import { DirectivesModule } from '../directives/directives.module';
+
 import { User } from '../user/user';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, Router ],
+  imports:      [ BrowserModule, FormsModule, Router, DirectivesModule ],
   declarations: [ LoginComponent ],
   bootstrap:    [ LoginComponent ]
 })

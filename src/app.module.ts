@@ -9,6 +9,7 @@ import { NavbarModule } from './navbar/navbar.module';
 import { ManageModule } from './manage/manage.module';
 import { RestaurantsModule } from './restaurants/restaurants.module'; 
 import { ModalModule } from './modal/modal.module';
+import { DirectivesModule } from './directives/directives.module';
 
 import { UserService } from './services/user.service';
 import { RestaurantsService } from './services/restaurants.service';
@@ -23,7 +24,7 @@ import { HomeComponent } from './home.component';
 
  
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, routing, NavbarModule, ModalModule ],
+  imports:      [ BrowserModule, FormsModule, routing, NavbarModule, ModalModule, DirectivesModule ],
   declarations: [ AppComponent, HomeComponent ],
   providers: 	[ appRoutingProviders, UserService, CanActivateViaUserService, RestaurantsService, CacheService, MenuService ],
   bootstrap:    [ AppComponent ]

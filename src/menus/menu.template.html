@@ -1,0 +1,32 @@
+<div class="container">
+    <h2>Manage "{{menu.getName()}}"</h2>
+    <button type="button" class="btn btn-danger" (click)="confirmDelete()">Delete</button>
+    <form (ngSubmit)="onSubmit()" #menuForm="ngForm">
+      <div class="form-group">
+        <label for="menu_name">Menu Name</label>
+        <input type="text" class="form-control" id="menu_name" [(ngModel)]="menu.name" name="menu_name" required>
+      </div>
+
+      <button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
+      <button type="submit" class="btn btn-default" [disabled]="!menuForm.form.valid">Save</button>
+    </form>
+</div>
+
+
+
+
+
+
+
+<modal #deleteMenuModal>
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Are you sure?</h4>
+    </modal-header>
+    <modal-body>
+        <h2>Are you sure you want to delete {{menu.name}}</h2>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
+        <button type="button" class="btn btn-default" (click)="deleteMenu()">Delete</button>
+    </modal-footer>
+</modal>

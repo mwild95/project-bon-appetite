@@ -31,5 +31,14 @@ export class RestaurantsService {
       		}
     	}
     }
+
+    deleteRestaurant ( restaurantToDeleteId : string ) {
+        for( let i:number=0; i<this.mockRestaurants.length; i++ ){
+            if( this.mockRestaurants[i].getId() == restaurantToDeleteId ){
+                this.mockRestaurants.splice(i,1);
+                break;
+            }
+        }
+    }
     
 }
