@@ -22,28 +22,27 @@ export class LoginComponent {
 
 	onSubmit ( ) {
 		this.hasError = false;
-		//This will eventually return a promise so we will need to wait for the promise to be returned
-		let result : boolean = this.userService.login( this.user );
 		this.submitted = true;
 		this.inProgress = true;
-
-		if( result ) {
-			//if success....
-			let redirectUrl : string = this.userService.getRedirectUrl();
-			if( typeof redirectUrl != 'undefined') {
-				//there is a link we need to redirect to rather than the standard
-				this.router.navigate( [ redirectUrl ] );
-			} else {
-				this.router.navigate(["/dashboard"]);
+		this.userService.login( this.user ).then(
+			result => {
+				if ( typeof result.username != 'undefined' ) {
+					let redirectUrl : string = this.userService.getRedirectUrl();
+					if( typeof redirectUrl != 'undefined') {
+						//there is a link we need to redirect to rather than the standard
+						this.router.navigate( [ redirectUrl ] );
+					} else {
+						this.router.navigate(["/dashboard"]);
+					}
+				}
+				this.inProgress = false;
+			},
+			err => {
+				this.error = err.message;
+				this.hasError = true;
+				this.inProgress = false;
 			}
-			
-		} else {
-			//something went wrong
-			//currently trying to find the error is hard, but once the rest call has been implemented it will be
-			//as easy as using success and fail operators
-			this.error = "Username or Password was incorrect";
-			this.hasError = true;
-		}
+		);
 		
 	}
 }

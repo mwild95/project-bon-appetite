@@ -2,6 +2,7 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { routing, appRoutingProviders } from './app.routing';
+import { HttpModule, JsonpModule } from '@angular/http';
 
 import { LoginModule } from './login/login.module';
 import { UserModule } from './user/user.module';
@@ -14,7 +15,9 @@ import { DirectivesModule } from './directives/directives.module';
 import { UserService } from './services/user.service';
 import { RestaurantsService } from './services/restaurants.service';
 import { CacheService } from './services/cache.service';
+import { ConstantsService } from './services/constants.service';
 import { MenuService } from './services/menu.service';
+import { RestService } from './services/rest.service';
 
 import { CanActivateViaUserService } from './guards/loggedin.guard';
 
@@ -24,9 +27,16 @@ import { HomeComponent } from './home.component';
 
  
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, routing, NavbarModule, ModalModule, DirectivesModule ],
+  imports:      [ BrowserModule,
+  				FormsModule,
+  				routing,
+  				NavbarModule,
+  				ModalModule,
+  				DirectivesModule,
+  				HttpModule,
+  				JsonpModule ],
   declarations: [ AppComponent, HomeComponent ],
-  providers: 	[ appRoutingProviders, UserService, CanActivateViaUserService, RestaurantsService, CacheService, MenuService ],
+  providers: 	[ appRoutingProviders, UserService, CanActivateViaUserService, RestaurantsService, CacheService, MenuService, ConstantsService, RestService ],
   bootstrap:    [ AppComponent ]
 })
 
