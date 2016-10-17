@@ -25,7 +25,20 @@ export class RestaurantsListComponent {
 	}
 
 	ngOnInit () {
-		this.restaurants = this.restaurantsService.getRestaurants();
+		
+
+		this.restaurantsService.getRestaurants(  ).then(
+			result => {
+				if ( typeof result != 'undefined' ) {
+					this.restaurants = <Restaurant[]>result;
+				}
+			},
+			err => {
+				alert(err.message);
+				//DEAL WITH ERROR
+			}
+		);
+
 	}
 
 	selectRestaurant ( restaurant : Restaurant ) {
@@ -40,8 +53,17 @@ export class RestaurantsListComponent {
 	}
 
 	createNewRestaurant ( newRestName: string) {
-		let newRestaurant: Restaurant = this.restaurantsService.createRestaurant( newRestName );
-		this.selectRestaurant ( newRestaurant );
+		let newRestaurant: Restaurant;
+		this.restaurantsService.createRestaurant( newRestName ).then(
+			result => {
+				if ( typeof result != 'undefined' ){
+					this.selectRestaurant( result );
+				}
+			},
+			err => {
+				alert(err.message);
+			}
+		);
 	}
 	///////////////////////////////////////////
 }
