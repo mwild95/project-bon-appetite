@@ -92,8 +92,11 @@ export class RestaurantComponent {
 	}
 
 	deleteRestaurant ( ) {
-		this.RestaurantsService.deleteRestaurant( this.restaurant.getId() );
-		this.onFinish();
+		this.RestaurantsService.deleteRestaurant( this.restaurant.getId() ).then(
+			( response ) => { this.onFinish(); },
+			err => { alert(err.message); }
+		);
+		
 	}
 	/////////////////////////////////////////////////
 

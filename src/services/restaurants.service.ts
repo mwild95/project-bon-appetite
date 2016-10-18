@@ -32,7 +32,6 @@ export class RestaurantsService {
     }
 
     createRestaurant ( restaurantName: string ) : Promise< Restaurant >{
-        console.log("Need to implement the add restaurant rest call");
         return new Promise( (resolve, reject) => {
             this.restService.createRestaurant ( restaurantName )
                 .subscribe (
@@ -66,13 +65,19 @@ export class RestaurantsService {
         return restaurants;
     }
 
-    public deleteRestaurant ( restaurantToDeleteId : string ) {
-        for( let i:number=0; i<this.mockRestaurants.length; i++ ){
-            if( this.mockRestaurants[i].getId() == restaurantToDeleteId ){
-                this.mockRestaurants.splice(i,1);
-                break;
-            }
-        }
+    public deleteRestaurant ( restaurantId : string ) {
+
+        return new Promise( (resolve, reject) => {
+            this.restService.deleteRestaurant ( restaurantId )
+                .subscribe (
+                    ( response ) => {
+                        resolve( response );
+                    },
+                    err => {
+                        reject(JSON.parse(err._body));
+                    }
+                );
+        });
     }
     
 }

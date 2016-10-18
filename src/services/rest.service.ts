@@ -55,5 +55,10 @@ export class RestService {
             .map( res=> res.json() );
     }  
 
+    public deleteRestaurant ( restToDeleteId : string ) {
+        let endPoint : string = this.constantsService.get("RESTAURANTS_ENDPOINT");
+        return this.http.delete( this.rest_server + endPoint + "" + restToDeleteId ); 
+    }
+
     
 }
