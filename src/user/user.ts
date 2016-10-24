@@ -1,8 +1,21 @@
 export class User {
-	constructor ( private username : string, private password : string ) { }
+
+	private _id : string;
+	private username: string;
+	private password: string;
+
+	constructor ( private userJSON : {} ) {
+		for(var jsonKey in userJSON) {
+			this[jsonKey] = userJSON[jsonKey];
+		}
+	}
 
 	getUsername ( ) {
 		return this.username;
+	}
+
+	getId ( ) {
+		return this._id;
 	}
 
 	isTheSameAs ( userToCheck : User ) {

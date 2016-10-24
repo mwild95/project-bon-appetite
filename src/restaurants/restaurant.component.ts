@@ -20,7 +20,7 @@ declare var $:any;
 
 export class RestaurantComponent { 
 
-	restaurant : Restaurant;
+	restaurant : Restaurant = new Restaurant({'_id':"1", 'name':"Loading"});
 	originalRestaurant : Restaurant;
 
 	availableMenus : Menu[];
@@ -38,19 +38,43 @@ export class RestaurantComponent {
 
 	ngOnInit () {
 		let id = this.route.snapshot.params['restaurantId'];
-		this.restaurant = $.extend({}, this.cache.get( id ) );
-		//this.restaurant = new Restaurant( this.originalRestaurant.getId(), this.originalRestaurant.getName() );
-		this.currentlySelectedMenu = this.restaurant.getMenu();
-		//TODO need to check for undefined and redirect to error page 
+		if( this.cache.get( id )){
+			this.restaurant = $.extend({}, this.cache.get( id ) );
+			this.currentlySelectedMenu = this.restaurant.getMenu();
+		} else {
+			this.RestaurantsService.getRestaurant( id ).then(
+				(response : Restaurant ) => {
+					this.restaurant = response;
+					//this.restaurant = new Restaurant( this.originalRestaurant.getId(), this.originalRestaurant.getName() );
+					this.currentlySelectedMenu = this.restaurant.getMenu();
+					//TODO need to check for undefined and redirect to error page 
+				},
+				err => {
+					alert(err.message);
+				}
+			);
+		}
+		
+		
 
-		this.availableMenus = this.MenuService.getMenus();
+		this.MenuService.getMenus().then(
+			( response ) => { this.availableMenus = response; },
+			( err ) => { alert(err.message); }
+		);
 	}
 
 	onSubmit () {
+
+		if(this.restaurant.getMenu()) {
+			this.restaurant.setMenu(null);
+		}
 		//this.restaurant holds the edited values
 		//restaurants.service.update??
-		this.saveChanges();
-		this.onFinish();
+		this.RestaurantsService.updateRestaurant(this.restaurant).then(
+			( response ) => { this.onFinish(); },
+			err => { alert(err.message); }
+		);
+		
 	}
 
 	onCancel () {
@@ -61,9 +85,8 @@ export class RestaurantComponent {
 		}
 	}
 
-	saveChanges () {
-		this.RestaurantsService.updateRestaurant(this.restaurant);
-		alert("Changes not saved (Rest needs to be implemented)");
+	saveChanges () : Promise<Restaurant> {
+		return this.RestaurantsService.updateRestaurant(this.restaurant);
 	}
 
 	onFinish () {

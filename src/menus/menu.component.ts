@@ -41,8 +41,10 @@ export class MenuComponent {
 	}
 
 	onSubmit ( ) {
-		this.saveChanges();
-		this.onFinish();
+		this.saveChanges().then(
+			( response ) => {this.onFinish();},
+			( err ) => { alert(err.message); }
+		);
 	}
 
 	onFinish () {
@@ -50,8 +52,7 @@ export class MenuComponent {
 	}
 
 	saveChanges () {
-		this.MenuService.updateMenu(this.menu);
-		alert("Changes not saved (Rest needs to be implemented)");
+		return this.MenuService.updateMenu(this.menu);
 	}
 
 	confirmDelete ( ) {
@@ -59,8 +60,10 @@ export class MenuComponent {
 	}
 
 	deleteMenu ( ) {
-		this.MenuService.deleteMenu( this.menu.getId() ); 
-		this.onFinish();
+		this.MenuService.deleteMenu( this.menu.getId() ).then(
+			( response ) => { this.onFinish(); },
+			( err ) => { alert(err.message); }
+		); 
 	}
 
 }

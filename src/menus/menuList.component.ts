@@ -25,7 +25,10 @@ export class MenuListComponent {
 	}
 
 	ngOnInit () {
-		this.menus = this.menuService.getMenus();
+		this.menuService.getMenus().then(
+			( response ) => { this.menus = response },
+			( err ) => { alert( err.message ); }
+		);
 	}
 
 	selectMenu ( menu : Menu ) {
@@ -39,8 +42,10 @@ export class MenuListComponent {
 	}
 
 	createNewMenu ( menuName: string ) {
-		let newMenu: Menu = this.menuService.createMenu( menuName );
-		this.selectMenu( newMenu );
+		this.menuService.createMenu( menuName ).then(
+			(response) => { this.selectMenu( response ); },
+			(err) => {alert(err.message)}
+		);
 	}
 	///////////////////////////////////////////////////////
 }

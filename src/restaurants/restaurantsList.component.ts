@@ -25,7 +25,6 @@ export class RestaurantsListComponent {
 	}
 
 	ngOnInit () {
-		
 
 		this.restaurantsService.getRestaurants(  ).then(
 			result => {

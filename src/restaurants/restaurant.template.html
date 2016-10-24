@@ -1,7 +1,7 @@
 
 
 <div class="container">
-    <h2>Manage "{{restaurant.getName()}}"</h2>
+    <h2>Manage - {{restaurant.getName()}}</h2>
     <button type="button" class="btn btn-danger" (click)="confirmDelete()">Delete</button>
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <div class="form-group">
@@ -9,7 +9,7 @@
         <input type="text" class="form-control" id="rest_name" [(ngModel)]="restaurant.name" name="rest_name" required>
 
      	<label for="rest_menu">Menu</label>
-     	<h3 id="rest_menu" name="rest_menu" *ngIf="!restaurant.menu || restaurant.menu == 'null'">No Menu Set</h3>
+     	<h3 id="rest_menu" name="rest_menu" *ngIf="restaurant.menu == null">No Menu Set</h3>
      	<h3 id="rest_menu" name="rest_menu" *ngIf="restaurant.menu">{{restaurant.menu.name}}</h3>
       <button type="button" class="btn btn-default" (click)="openMenuPickerModal()">Change</button>
       </div>
@@ -28,7 +28,7 @@
     </modal-header>
     <modal-body>
         <select class="form-control" id="activeMenu" required [(ngModel)]="currentlySelectedMenu">
-          <option value="undefined">No Menu</option>
+          <option [ngValue]="null">No Menu</option>
           <option *ngFor="let menu of availableMenus" [ngValue]="menu">{{menu.name}}</option>
         </select>
     </modal-body>

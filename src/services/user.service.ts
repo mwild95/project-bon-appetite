@@ -23,7 +23,7 @@ export class UserService {
             this.restService.authenticate( user )
                 .subscribe(
                     userResponse => {
-                        this.user = userResponse;
+                        this.user = new User(userResponse);
                         this.loggedIn = true;
                         resolve( user );
                     },
@@ -54,6 +54,10 @@ export class UserService {
 
     getUsername ( ) {
         return this.user.getUsername();
+    }
+
+    getId ( ) {
+        return this.user.getId();
     }
 
     isAuthenticated ( ) {

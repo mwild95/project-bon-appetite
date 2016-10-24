@@ -1,15 +1,22 @@
 export class Menu {
 
-	constructor ( private id: string, private name: string ) {
+	private _id : string;
+	private name : string;
+	
 
+	constructor ( private menuJSON: {} ) {
+		for( var jsonKey in this.menuJSON ) {
+			this[jsonKey] = this.menuJSON[jsonKey];
+		}
+		delete this.menuJSON;
 	}
 
 	public getId() : string {
-		return this.id;
+		return this._id;
 	}
 
-	public setId( _id : string ) {
-		this.id = _id;
+	public setId( id : string ) {
+		this._id = id;
 	}
 
 	public getName () {

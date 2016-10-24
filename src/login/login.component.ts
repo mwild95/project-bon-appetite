@@ -10,7 +10,7 @@ import { UserService } from '../services/user.service';
 })
 
 export class LoginComponent { 
-	user = new User( "", "" );
+	user = new User( {} );
 	submitted:boolean = false;
 	inProgress:boolean = false;
 	hasError:boolean = false;
