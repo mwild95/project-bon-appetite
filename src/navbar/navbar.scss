@@ -1,0 +1,26 @@
+@import "../sass/variables";
+
+.navbar-default {
+	background-color : $mainCol;
+}
+
+.navbar-default .navbar-brand {
+	color: $secondaryCol;
+}
+
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+	color: lighten($secondaryCol, 15%);
+}
+
+.navbar-default .navbar-nav > li > a {
+	color: $secondaryCol;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+	color: lighten($secondaryCol, 15%);
+}
+
+.navbar {
+	border: 				none;
+	border-radius: 			0;
+}

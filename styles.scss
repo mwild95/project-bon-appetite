@@ -1,0 +1,124 @@
+@import "./src/sass/variables";
+
+body {
+	color : $secondaryCol;
+	overflow : hidden;
+}
+
+.display-inline-block {
+	display : inline-block;
+}
+
+div.top-panel-actions {
+	width:		99%;
+	margin:		5px;
+	margin-top: -10px;
+	display: 	inline-block;
+
+	.right{
+		float: right
+	}
+
+	.left {
+		float: left;
+	}
+
+
+	.titles{
+		border-bottom: 				lighten($mainCol, 30%) solid 5px;
+		margin-left: 				-5px;
+		padding-left: 				5px;
+	}
+
+	.buttons {
+		padding: $standardPadding;
+		
+		button{
+			margin-left: 2px;
+			margin-right: 2px;
+		}
+	}
+}
+
+div.panel-contents{
+	padding: 		$standardPadding;
+	padding-top:	0px;
+}
+
+.page-content {
+	width:		100%;
+	height:		100%;
+	margin-top:	-21px;
+}
+
+.section-title {
+	margin-bottom:		5px;
+}
+
+.btn-default {
+	border-color:		$mainCol;
+
+	&:hover{
+		border-color:   		$mainCol;
+		background-color:		lighten($mainCol, 30%);
+	}
+
+	&:focus{
+		border-color: 			darken($mainCol, 10%);
+		background-color :		$mainCol;
+	}
+
+	&:active{
+		border-color: 			darken($mainCol, 10%);
+		background-color :		$mainCol;
+	}
+
+	&:active:focus{
+		border-color: 			darken($mainCol, 10%);
+		background-color :		$mainCol;
+	}
+}
+
+.btn {
+	border-radius : 0px;
+}
+
+.full-width {
+	width: 100%;
+}
+
+.form-control {
+	border : none;
+	border-radius : 0px;
+	&:focus {
+		border : none;
+	}
+}
+
+.standard-right-margin {
+	margin-right: $standardMargin;
+}
+
+.standard-bottom-margin {
+	margin-bottom: $standardMargin;
+}
+
+.no-left-padding {
+	padding-left: 0px;
+}
+
+.float-right {
+	float: right;
+}
+
+hr {
+	margin-top: 50px;
+    margin-bottom: 50px;
+    border: 0;
+    border-top: none;
+}
+
+
+.modal-content {
+	border-radius: 0px;
+}

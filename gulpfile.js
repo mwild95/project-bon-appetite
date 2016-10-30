@@ -1,5 +1,6 @@
 // include gulp
 var gulp = require('gulp'); 
+var sass = require('gulp-sass');
 
 //include the ng2 compiler plugin
 var embedTemplates = require('gulp-inline-ng2-template');
@@ -31,3 +32,12 @@ gulp.task('tsc', function () {
         }))
         .pipe(gulp.dest('./build'));
 });
+
+gulp.task('sass', function ( ) {
+    gulp.src('src/**/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('./app'));
+    gulp.src('styles.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('./'));
+})

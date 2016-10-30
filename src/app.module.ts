@@ -18,6 +18,9 @@ import { CacheService } from './services/cache.service';
 import { ConstantsService } from './services/constants.service';
 import { MenuService } from './services/menu.service';
 import { RestService } from './services/rest.service';
+import { IngredientsService } from './services/ingredients.service';
+import { ProductsService } from './services/products.service';
+import { SectionsService } from './services/sections.service';
 
 import { CanActivateViaUserService } from './guards/loggedin.guard';
 
@@ -36,7 +39,18 @@ import { HomeComponent } from './home.component';
   				HttpModule,
   				JsonpModule ],
   declarations: [ AppComponent, HomeComponent ],
-  providers: 	[ appRoutingProviders, UserService, CanActivateViaUserService, RestaurantsService, CacheService, MenuService, ConstantsService, RestService ],
+  providers: 	[ appRoutingProviders,
+                UserService,
+                CanActivateViaUserService,
+                RestaurantsService,
+                CacheService,
+                MenuService,
+                ConstantsService,
+                RestService,
+                IngredientsService,
+                ProductsService,
+                SectionsService
+              ],
   bootstrap:    [ AppComponent ]
 })
 

@@ -1,16 +1,21 @@
 import { Component } from '@angular/core';
 import { Inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 import { User } from '../user/user';
 import { UserService } from '../services/user.service';
 
 @Component({
-  templateUrl: './src/manage/manage.template.html'
+  templateUrl: './src/manage/manage.template.html',
+  styles: [':host{ display: flex;}'],
+  styleUrls: ['./app/manage/manage.css']
 })
 
 export class ManageComponent { 
 	
+	constructor( private router : Router ) {
+
+	}
 }
 
 //TODO

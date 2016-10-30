@@ -1,0 +1,48 @@
+<div class="top-panel-actions">
+    <div class="titles">
+        <h3 class="section-title">Section's</h3>
+    </div>
+    <div class="right buttons">
+        <button class="btn btn-default right" type="button" (click)="addNewSection()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+    </div>
+</div>
+
+<div class="panel-contents">
+    <table class="table">
+        <tr>
+            <th class="col-lg-4">Name</th>
+            <th class="col-lg-4">No. of Products</th>
+            <th class="col-lg-4">Actions</th>
+        </tr>
+        <tr *ngFor="let section of sections; let r = index;" (click)="selectSection(section)">
+            <td>{{section.name}}</td>
+            <td>{{section.products.length}}</td>
+            <td>
+                <button class="btn btn-default" type="button" (click)="selectSection(section)"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                <button class="btn btn-default" type="button" (click)="deleteSection(section)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<modal #newSectionModal>
+	<form (ngSubmit)="createNewSection(newRestName.value)" #sectionForm="ngForm">
+    	<div class="form-group">
+		
+    		<modal-header [show-close]="true">
+        		<h4 class="modal-title">Add New Section</h4>
+    		</modal-header>
+    		<modal-body>
+        		<label for="newRestName">Name</label>
+        		<input type="text" class="form-control" id="newRestName" #newRestName required/>
+    		</modal-body>
+    		<modal-footer>
+        		<button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
+        		<button type="submit" class="btn btn-default" [disabled]="!sectionForm.form.valid">Create</button>
+    		</modal-footer>
+		
+    	</div>
+
+	</form>
+</modal> 

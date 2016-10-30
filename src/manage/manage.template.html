@@ -1,6 +1,14 @@
-<h1>Manage List</h1>
-<ul>
-	<li><a routerLink="/manage/restaurants">Restaurants</a></li>
-	<li><a routerLink="/manage/menus">Menu's</a></li>
-</ul>
-<router-outlet></router-outlet>
+<!--<h1>Manage List</h1>-->
+<div class="manage-side-menu display-inline-block">
+	<ul>
+		<li routerLinkActive="active-side-menu-element" [routerLinkActiveOptions]="{exact: true}" ><a routerLink="/manage/restaurants">Restaurants</a></li>
+		<li routerLinkActive="active-side-menu-element" [routerLinkActiveOptions]="{exact: true}" ><a routerLink="/manage/menus">Menu's</a></li>
+		<li routerLinkActive="active-side-menu-element" [routerLinkActiveOptions]="{exact: true}" ><a routerLink="/manage/sections">Section's</a></li>
+		<li routerLinkActive="active-side-menu-element" [routerLinkActiveOptions]="{exact: true}" ><a routerLink="/manage/ingredients">Ingredient's</a></li>
+		<li routerLinkActive="active-side-menu-element" [routerLinkActiveOptions]="{exact: true}" ><a routerLink="/manage/products">Product's</a></li>
+	</ul>
+</div>
+
+<div class="manage-main-panel display-inline-block">
+	<router-outlet></router-outlet>
+</div>

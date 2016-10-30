@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'navbar',
   templateUrl: './src/navbar/navbar.template.html',
+  styleUrls: ['./app/navbar/navbar.css']
 })
 
 export class NavbarComponent { 

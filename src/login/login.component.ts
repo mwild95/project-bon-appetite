@@ -6,7 +6,8 @@ import { User } from '../user/user';
 import { UserService } from '../services/user.service';
 
 @Component({
-  templateUrl: './src/login/login.template.html'
+  templateUrl: './src/login/login.template.html',
+  styleUrls : ['./app/login/login.css']
 })
 
 export class LoginComponent { 

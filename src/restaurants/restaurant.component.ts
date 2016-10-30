@@ -36,6 +36,10 @@ export class RestaurantComponent {
 
 	}
 
+	log( something ) {
+		console.log(something);
+	}
+
 	ngOnInit () {
 		let id = this.route.snapshot.params['restaurantId'];
 		if( this.cache.get( id )){
@@ -65,7 +69,7 @@ export class RestaurantComponent {
 
 	onSubmit () {
 
-		if(this.restaurant.getMenu()) {
+		if(!this.restaurant.getMenu()) {
 			this.restaurant.setMenu(null);
 		}
 		//this.restaurant holds the edited values

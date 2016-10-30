@@ -10,7 +10,8 @@ import { CacheService } from '../services/cache.service';
 import { ModalComponent } from '../modal/modal.module';
 
 @Component({
-  templateUrl: './src/restaurants/restaurantsList.template.html'
+  templateUrl: './src/restaurants/restaurantsList.template.html',
+  styleUrls: ['./app/restaurants/restaurant.css']
 })
 
 export class RestaurantsListComponent { 

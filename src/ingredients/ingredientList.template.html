@@ -1,0 +1,46 @@
+<div class="top-panel-actions">
+    <div class="titles">
+        <h3 class="section-title">Ingredient's</h3>
+    </div>
+    <div class="right buttons">
+        <button class="btn btn-default right" type="button" (click)="addNewIngredient()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+    </div>
+</div>
+
+<div class="panel-contents">
+    <table class="table">
+        <tr>
+            <th class="col-lg-8">Name</th>
+            <th class="col-lg-4">Actions</th>
+        </tr>
+        <tr *ngFor="let ingredient of ingredients; let r = index;" (click)="selectIngredient(ingredient)">
+            <td>{{ingredient.name}}</td>
+            <td>
+                <button class="btn btn-default" type="button" (click)="selectIngredient(ingredient)"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                <button class="btn btn-default" type="button" (click)="deleteIngredient(ingredient)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<modal #newIngredientModal>
+	<form (ngSubmit)="createNewIngredient(newIngredientName.value)" #ingredientForm="ngForm">
+    	<div class="form-group">
+		
+    		<modal-header [show-close]="true">
+        		<h4 class="modal-title">Add New Ingredient</h4>
+    		</modal-header>
+    		<modal-body>
+        		<label for="newIngredientName">Name</label>
+        		<input type="text" class="form-control" id="newIngredientName" #newIngredientName required/>
+    		</modal-body>
+    		<modal-footer>
+        		<button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
+        		<button type="submit" class="btn btn-default" [disabled]="!ingredientForm.form.valid">Create</button>
+    		</modal-footer>
+		
+    	</div>
+
+	</form>
+</modal> 

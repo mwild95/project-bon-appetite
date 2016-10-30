@@ -15,6 +15,16 @@ module.exports = {
 	"MENUS_ENDPOINT" : "menus/",
 
 
+	//INGREDIENTS
+	"INGREDIENTS_ENDPOINT" : "ingredients/",
+
+	//PRODUCTS
+	"PRODUCTS_ENDPOINT" : "products/",
+
+	//SECTIONS
+	"SECTIONS_ENDPOINT" : "sections/",
+
+
 	//Misc
 	"LOGIN_ENDPOINT" : "login/",
 

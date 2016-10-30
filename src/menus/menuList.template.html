@@ -1,8 +1,31 @@
-<h1>Menu List</h1>
-<button type="button" (click)="addNewMenu()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-<ul>
-	<li *ngFor="let menu of menus; let r = index;"><a (click)="selectMenu(menu)">{{menu.getName()}}</a></li>
-</ul>
+<div class="top-panel-actions">
+    <div class="titles">
+        <h3 class="section-title">Menu's</h3>
+    </div>
+    <div class="right buttons">
+        <button class="btn btn-default right" type="button" (click)="addNewMenu()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+    </div>
+</div>
+
+<div class="panel-contents">
+    <table class="table">
+        <tr>
+            <th class="col-lg-3">Name</th>
+            <!--<th class="col-lg-3">No. of Sections</th>
+            <th class="col-lg-3">No. of Products</th>-->
+            <th class="col-lg-3">Actions</th>
+        </tr>
+        <tr *ngFor="let menu of menus; let r = index;" (click)="selectMenu(menu)">
+            <td>{{menu.name}}</td>
+            <!--<td>{{menu.sections.length}}</td>
+            <td>{{menu.products.length}}</td>-->
+            <td>
+                <button class="btn btn-default" type="button" (click)="selectMenu(menu)"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                <button class="btn btn-default" type="button" (click)="deleteMenu(menu)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+            </td>
+        </tr>
+    </table>
+</div>
 
 <modal #newMenuModal>
 	<form (ngSubmit)="createNewMenu(newMenuName.value)" #menuForm="ngForm">

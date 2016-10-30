@@ -1,0 +1,34 @@
+
+<div class="top-panel-actions">
+    <div class="titles">
+        <h3 class="section-title">Manage - {{ingredient.name}}</h3>
+    </div>
+    <div class="right buttons">
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Delete <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+        <button type="button" class="btn btn-default" (click)="onCancel()">Cancel <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <button class="btn btn-default right" type="button" (click)="onSubmit()" [disabled]="!ingredientForm.form.valid">Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+    </div>
+</div>
+<div class="container full-width">
+    <form (ngSubmit)="onSubmit()" #ingredientForm="ngForm">
+      <div class="form-group">
+        <label for="ingr_name">Ingredient Name</label>
+        <input type="text" class="form-control col-lg-12 col-md-12 col-sm-12" id="ingr_name" [(ngModel)]="ingredient.name" name="ingr_name" required>
+        <hr>
+      </div>
+
+    </form>
+</div>
+
+<modal #deleteIngredientModal>
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Are you sure?</h4>
+    </modal-header>
+    <modal-body>
+        <h2>Are you sure you want to delete {{ingredient.name}}</h2>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
+        <button type="button" class="btn btn-default" (click)="deleteIngredient()">Delete</button>
+    </modal-footer>
+</modal>

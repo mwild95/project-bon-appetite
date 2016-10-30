@@ -9,6 +9,9 @@ import { UserService } from './user.service';
 import { User } from '../user/User';
 import { Restaurant } from '../classes/Restaurant';
 import { Menu } from '../classes/Menu';
+import { Ingredient } from '../classes/Ingredient';
+import { Product } from '../classes/Product';
+import { Section } from '../classes/Section';
 
 @Injectable()
 export class RestService {
@@ -16,11 +19,17 @@ export class RestService {
 	private rest_server : string;
     private restaurant_endpoint : string;
     private menu_endpoint : string;
+    private ingredient_endpoint : string;
+    private product_endpoint : string;
+    private section_endpoint : string;
 
     constructor ( private constantsService : ConstantsService, private http : Http ) {
     	this.rest_server = this.constantsService.get( "REST_SERVER" );
         this.restaurant_endpoint = this.constantsService.get("RESTAURANTS_ENDPOINT");
         this.menu_endpoint = this.constantsService.get("MENUS_ENDPOINT");
+        this.ingredient_endpoint = this.constantsService.get("INGREDIENTS_ENDPOINT");
+        this.product_endpoint = this.constantsService.get("PRODUCTS_ENDPOINT");
+        this.section_endpoint = this.constantsService.get("SECTIONS_ENDPOINT");
     }
 
     
@@ -109,5 +118,103 @@ export class RestService {
         return this.http.put( this.rest_server + endPoint + menuToUpdate.getId(), menuToUpdate )
             .map( res => res.json() );
     }
+
+
+
+
+    ////// Ingredients
+    public getIngredient( ingredientId : string ) : Observable<Ingredient> {
+        let endPoint : string = this.ingredient_endpoint;
+        return this.http.get( this.rest_server + endPoint + ingredientId )
+            .map( res => res.json() );
+    }
+
+    public getIngredients ( userId : string) : Observable<Ingredient[]> {
+        let endPoint : string = this.ingredient_endpoint;
+        return this.http.get( this.rest_server + endPoint + "?_id=" + userId )
+            .map( res => res.json() );
+    }
+
+    public createIngredient ( ingredientToCreateName : string, _id: string ) : Observable< Ingredient >{
+        let bodyToSend = {"name":ingredientToCreateName, "owning_user" : _id};
+        let endPoint: string = this.ingredient_endpoint;
+        return this.http.post( this.rest_server + endPoint , bodyToSend)
+            .map( res=> res.json() );
+    }  
+
+    public deleteIngredient ( ingredientToDeleteId : string ) : Observable< Response > {
+        let endPoint : string = this.ingredient_endpoint;
+        return this.http.delete( this.rest_server + endPoint + ingredientToDeleteId ); 
+    }
+
+    public updateIngredient ( ingredientToUpdate : Ingredient ) : Observable< Ingredient >{
+        let endPoint : string = this.ingredient_endpoint;
+        return this.http.put( this.rest_server + endPoint + ingredientToUpdate.getId(), ingredientToUpdate )
+            .map( res => res.json() );
+    }
     
+
+     ///// Products
+
+    public getProduct ( productId : string ) : Observable<Product> {
+        let endPoint : string = this.product_endpoint;
+        return this.http.get( this.rest_server + endPoint + productId )
+            .map( res => res.json() ); 
+    }
+
+    public getProducts ( userId : string ) : Observable<Product[]> {
+        let endPoint : string = this.product_endpoint;
+        return this.http.get( this.rest_server + endPoint + "?_id=" + userId )
+            .map( res => res.json() );
+    }
+
+    public createProduct ( restToCreateName : string, _id : string ) {
+        let bodyToSend = {"name":restToCreateName, "owning_user":_id };
+        let endPoint: string = this.product_endpoint;
+        return this.http.post( this.rest_server + endPoint , bodyToSend)
+            .map( res=> res.json() );
+    }  
+
+    public deleteProduct ( restToDeleteId : string ) {
+        let endPoint : string = this.product_endpoint;
+        return this.http.delete( this.rest_server + endPoint + "" + restToDeleteId ); 
+    }
+
+    public updateProduct ( restToUpdate : Product ) : Observable< Product >{
+        let endPoint : string = this.product_endpoint;
+        return this.http.put( this.rest_server + endPoint + restToUpdate.getId(), restToUpdate )
+            .map( res => res.json() );
+    }
+
+     ///// Sections
+
+    public getSection ( sectionId : string ) : Observable<Section> {
+        let endPoint : string = this.section_endpoint;
+        return this.http.get( this.rest_server + endPoint + sectionId )
+            .map( res => res.json() ); 
+    }
+
+    public getSections ( userId : string ) : Observable<Section[]> {
+        let endPoint : string = this.section_endpoint;
+        return this.http.get( this.rest_server + endPoint + "?_id=" + userId )
+            .map( res => res.json() );
+    }
+
+    public createSection ( restToCreateName : string, _id : string ) {
+        let bodyToSend = {"name":restToCreateName, "owning_user":_id };
+        let endPoint: string = this.section_endpoint;
+        return this.http.post( this.rest_server + endPoint , bodyToSend)
+            .map( res=> res.json() );
+    }  
+
+    public deleteSection ( restToDeleteId : string ) {
+        let endPoint : string = this.section_endpoint;
+        return this.http.delete( this.rest_server + endPoint + "" + restToDeleteId ); 
+    }
+
+    public updateSection ( restToUpdate : Section ) : Observable< Section >{
+        let endPoint : string = this.section_endpoint;
+        return this.http.put( this.rest_server + endPoint + restToUpdate.getId(), restToUpdate )
+            .map( res => res.json() );
+    }
 }

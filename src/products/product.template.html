@@ -1,0 +1,62 @@
+<div class="top-panel-actions">
+    <div class="titles">
+        <h3 class="section-title">Manage - {{product.name}}</h3>
+    </div>
+    <div class="right buttons">
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Delete <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+        <button type="button" class="btn btn-default" (click)="onCancel()">Cancel <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <button class="btn btn-default right" type="button" (click)="onSubmit()" [disabled]="!productForm.form.valid">Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+    </div>
+</div>
+
+<div class="container full-width">
+    <form (ngSubmit)="onSubmit()" #productForm="ngForm">
+      <div class="form-group">
+        <label for="prod_name">Product Name</label>
+        <input type="text" class="form-control col-lg-12 col-md-12 col-sm-12" id="prod_name" [(ngModel)]="product.name" name="prod" required>
+        <hr>
+        <label for="product_ingredients">Ingredient's</label>
+        <button type="button" class="btn btn-default float-right standard-bottom-margin" (click)="addIngredient()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+        <table class="table" id="product_ingredients" name="product_ingredients">
+          <tr>
+            <th class="col-lg-8">Name</th>
+            <th class="col-lg-4">Actions</th>
+          </tr>
+          <tr *ngFor="let ingredient of product.ingredients; let i = index;">
+            <td>{{ingredient.name}}</td>
+            <td><button type="button" class="btn btn-danger" (click)="removeIngredient(i)">Remove</button></td>
+          </tr>
+        </table>
+      </div>
+
+    </form>
+</div>
+
+
+<modal #deleteProductModal>
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Are you sure?</h4>
+    </modal-header>
+    <modal-body>
+        <h2>Are you sure you want to delete {{product.name}}</h2>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
+        <button type="button" class="btn btn-default" (click)="deleteProduct()">Delete</button>
+    </modal-footer>
+</modal>
+
+<modal #addIngredientModal>
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Add an Ingredient</h4>
+    </modal-header>
+    <modal-body>
+        <select class="form-control" id="new_ingredient" required [(ngModel)]="addIngredient">
+          <option *ngFor="let ingredient of availableIngredients" [ngValue]="ingredient">{{ingredient.name}}</option>
+        </select>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
+        <button type="button" class="btn btn-default" (click)="confirmAddIngredient( addIngredient )">Add</button>
+    </modal-footer>
+</modal>
