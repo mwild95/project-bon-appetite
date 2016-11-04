@@ -11,7 +11,7 @@
   	  	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       		<ul class="nav navbar-nav">
         		<li><a routerLink="/manage" *ngIf="userService.isAuthenticated()">Manage</a></li>
-        		<li><a href="javascript:;">Link</a></li>
+        		<li><a routerLink="/orders" *ngIf="userService.isAuthenticated()">Orders</a></li>
       		</ul>
       
       		<ul class="nav navbar-nav navbar-right">

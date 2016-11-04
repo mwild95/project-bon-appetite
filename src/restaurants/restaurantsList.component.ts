@@ -46,6 +46,10 @@ export class RestaurantsListComponent {
 		this.router.navigate(['/manage/restaurants', restaurant.getId()]);
 	}
 
+	navRestaurantOrders ( restaurant: Restaurant ) {
+		this.cache.put( restaurant.getId(), restaurant );
+		this.router.navigate(['/orders', restaurant.getId()]);
+	}
 
 //////////add restaurant modal stuff//////////
 	addNewRestaurant ( ) {

@@ -3,6 +3,7 @@ export class User {
 	private _id : string;
 	private username: string;
 	private password: string;
+	private email:	  string;
 
 	constructor ( private userJSON : {} ) {
 		for(var jsonKey in userJSON) {

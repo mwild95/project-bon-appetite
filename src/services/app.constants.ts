@@ -9,7 +9,7 @@ module.exports = {
 
 	//Restaurants
 	"RESTAURANTS_ENDPOINT" : "restaurants/",
-
+	"RESTAURANT_ENDPOINT" : "restaurant/",
 
 	//Menus
 	"MENUS_ENDPOINT" : "menus/",
@@ -23,6 +23,9 @@ module.exports = {
 
 	//SECTIONS
 	"SECTIONS_ENDPOINT" : "sections/",
+
+	//ORDERS
+	"ORDERS_ENDPOINT" : "orders/",
 
 
 	//Misc

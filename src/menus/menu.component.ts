@@ -4,8 +4,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { CacheService} from '../services/cache.service';
 import { MenuService } from '../services/menu.service';
+import { SectionsService } from '../services/sections.service'; 
 
 import { Menu } from '../classes/Menu';
+import { Section } from '../classes/Section';
 
 import { ModalComponent } from '../modal/modal.module';
 
@@ -18,11 +20,15 @@ declare var $:any;
 export class MenuComponent { 
 
 	menu: Menu;
+	availableSections : Section[];
 
 	@ViewChild('deleteMenuModal')	
 	deleteMenuModal: ModalComponent;
 
-	constructor ( private route : ActivatedRoute, private cache : CacheService, private router : Router, private MenuService : MenuService ) {
+	@ViewChild('addSectionModal')
+	addSectionModal: ModalComponent;
+
+	constructor ( private route : ActivatedRoute, private cache : CacheService, private router : Router, private MenuService : MenuService, private sectionsService : SectionsService ) {
 
 	}
 
@@ -30,6 +36,14 @@ export class MenuComponent {
 		let id = this.route.snapshot.params['menuId'];
 		this.menu = $.extend({}, this.cache.get( id ) );
 		
+		this.sectionsService.getSections().then(
+			(response : Section[]) => {
+				this.availableSections = response;
+			}, 
+			err => {
+				alert(err.message);
+			}
+		);
 	}
 
 	onCancel () {
@@ -65,5 +79,23 @@ export class MenuComponent {
 			( err ) => { alert(err.message); }
 		); 
 	}
+
+
+	////// SECTIONS STUFF?/////////////////
+	addSection ( ) {
+		this.addSectionModal.open();
+	}
+
+	confirmAddSection ( sectionToAdd : Section) {
+		this.menu.addSection( sectionToAdd );
+		this.addSectionModal.close();
+	}
+
+	removeSection ( i : number ) {
+		let currentSections : Section[] = this.menu.getSections();
+		currentSections.splice(i,1);
+		this.menu.setSections(currentSections);
+	}
+	///////////////////////////////////////
 
 }

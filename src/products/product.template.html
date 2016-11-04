@@ -16,7 +16,7 @@
         <input type="text" class="form-control col-lg-12 col-md-12 col-sm-12" id="prod_name" [(ngModel)]="product.name" name="prod" required>
         <hr>
         <label for="product_ingredients">Ingredient's</label>
-        <button type="button" class="btn btn-default float-right standard-bottom-margin" (click)="addIngredient()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+        <button type="button" class="btn btn-default float-right standard-bottom-margin" (click)="addIngredientModal.open()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
         <table class="table" id="product_ingredients" name="product_ingredients">
           <tr>
             <th class="col-lg-8">Name</th>

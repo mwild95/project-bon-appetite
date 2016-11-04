@@ -14,7 +14,19 @@
       <div class="form-group">
         <label for="menu_name">Menu Name</label>
         <input type="text" class="form-control col-lg-12 col-md-12 col-sm-12" id="rest_name" [(ngModel)]="menu.name" name="menu_name" required>
-        <br/>
+        <hr>
+        <label for="menu_sections">Section's</label>
+        <button type="button" class="btn btn-default float-right standard-bottom-margin" (click)="addSectionModal.open()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+        <table class="table" id="menu_sections" name="menu_sections">
+          <tr>
+            <th class="col-lg-8">Name</th>
+            <th class="col-lg-4">Actions</th>
+          </tr>
+          <tr *ngFor="let section of menu.sections; let i = index;">
+            <td>{{section.name}}</td>
+            <td><button type="button" class="btn btn-danger" (click)="removeSection(i)">Remove</button></td>
+          </tr>
+        </table>
       </div>
 
     </form>
@@ -30,5 +42,20 @@
     <modal-footer>
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
         <button type="button" class="btn btn-default" (click)="deleteMenu()">Delete</button>
+    </modal-footer>
+</modal>
+
+<modal #addSectionModal>
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Add a Section</h4>
+    </modal-header>
+    <modal-body>
+        <select class="form-control" id="new_section" required [(ngModel)]="addSection">
+          <option *ngFor="let section of availableSections" [ngValue]="section">{{section.name}}</option>
+        </select>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
+        <button type="button" class="btn btn-default" (click)="confirmAddSection( addSection )">Add</button>
     </modal-footer>
 </modal>

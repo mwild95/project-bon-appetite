@@ -11,6 +11,7 @@ import { ManageModule } from './manage/manage.module';
 import { RestaurantsModule } from './restaurants/restaurants.module'; 
 import { ModalModule } from './modal/modal.module';
 import { DirectivesModule } from './directives/directives.module';
+import { PipesModule } from './pipes/pipes.module'; 
 
 import { UserService } from './services/user.service';
 import { RestaurantsService } from './services/restaurants.service';
@@ -21,6 +22,7 @@ import { RestService } from './services/rest.service';
 import { IngredientsService } from './services/ingredients.service';
 import { ProductsService } from './services/products.service';
 import { SectionsService } from './services/sections.service';
+import { OrdersService } from './services/orders.service';
 
 import { CanActivateViaUserService } from './guards/loggedin.guard';
 
@@ -37,7 +39,8 @@ import { HomeComponent } from './home.component';
   				ModalModule,
   				DirectivesModule,
   				HttpModule,
-  				JsonpModule ],
+  				JsonpModule,
+          PipesModule ],
   declarations: [ AppComponent, HomeComponent ],
   providers: 	[ appRoutingProviders,
                 UserService,
@@ -49,7 +52,8 @@ import { HomeComponent } from './home.component';
                 RestService,
                 IngredientsService,
                 ProductsService,
-                SectionsService
+                SectionsService,
+                OrdersService
               ],
   bootstrap:    [ AppComponent ]
 })

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 import { User } from '../user/user';
 import { UserService } from '../services/user.service';

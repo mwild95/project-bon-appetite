@@ -9,6 +9,7 @@ import { UserRoutes } from './user/user.routing';
 import { DashboardRoutes } from './dashboard/dashboard.routing';
 import { LoginRoutes } from './login/login.routing';
 import { ManageRoutes } from './manage/manage.routing';
+import { OrdersRoutes } from './orders/orders.routing';
 
 import { CanActivateViaUserService } from './guards/loggedin.guard';
 
@@ -17,6 +18,7 @@ const routes: Routes = [
 	...DashboardRoutes,
 	...LoginRoutes,
 	...ManageRoutes,
+	...OrdersRoutes,
 	//this needs to redirect to a homepage
 	{path:'', component: HomeComponent },
 	{path:'**', component: PageNotFoundComponent}

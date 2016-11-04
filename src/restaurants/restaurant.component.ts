@@ -8,6 +8,7 @@ import { RestaurantsService } from '../services/restaurants.service';
 
 import { Restaurant } from '../classes/Restaurant';
 import { Menu } from '../classes/Menu';
+import { OpeningTimes } from '../classes/OpeningTimes';
 
 import { ModalComponent } from '../modal/modal.module';
 
@@ -26,18 +27,18 @@ export class RestaurantComponent {
 	availableMenus : Menu[];
 	currentlySelectedMenu: Menu;
 
+	openingTimeToAdd = new OpeningTimes({days:[], open: "10:00", close: "22:00"});
+
 	@ViewChild('menuPickerModal')
 	menuPickerModal: ModalComponent;
 
 	@ViewChild('deleteRestaurantModal')
 	deleteRestaurantModal: ModalComponent;
+
+	@ViewChild('addOpeningTimeModal')
+	addOpeningTimeModal :ModalComponent;
 	
 	constructor ( private route : ActivatedRoute, private cache : CacheService, private router : Router, private MenuService : MenuService, private RestaurantsService: RestaurantsService ) {
-
-	}
-
-	log( something ) {
-		console.log(something);
 	}
 
 	ngOnInit () {
@@ -127,4 +128,15 @@ export class RestaurantComponent {
 	}
 	/////////////////////////////////////////////////
 
+
+	///// Opening Times//////////////
+	addOpeningTime ( ) {
+		this.restaurant.addOpeningTime(this.openingTimeToAdd);
+		this.openingTimeToAdd = new OpeningTimes({days:[], open: "10:00", close: "22:00"});
+		this.addOpeningTimeModal.close();
+	}
+
+	removeOpeningTime ( index : number ) {
+		this.restaurant.setOpeningTimes(<OpeningTimes[]>this.restaurant.getOpeningTimes().splice(index, 1));
+	}
 }

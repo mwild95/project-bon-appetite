@@ -124,7 +124,7 @@ export class ProductComponent {
 
 	confirmAddIngredient ( ingredientToAdd : Ingredient) {
 		this.product.addIngredient( ingredientToAdd );
-		this.addIngredientModal.close();
+		this.addIngredientModal.dismiss();
 	}
 
 	removeIngredient ( i : number ) {

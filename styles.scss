@@ -1,5 +1,9 @@
 @import "./src/sass/variables";
 
+$liPadding : 20px;
+$activeBorder : 7px;
+$activePadding: $liPadding - $activeBorder;
+
 body {
 	color : $secondaryCol;
 	overflow : hidden;
@@ -121,4 +125,62 @@ hr {
 
 .modal-content {
 	border-radius: 0px;
+}
+
+.page-main-panel {
+	padding-right: 0px;
+}
+
+.page-side-menu {
+	padding: 	10px 10px 10px 0px;
+	background-color:		lighten($mainCol, 30%);
+	height: 	100%;
+
+	ul {
+		padding-left: 		0px;
+
+		li{
+			list-style-type: 	none;
+			font-size:			1.3em;
+			padding:			2px 2px 2px $liPadding;
+
+			&.active-side-menu-element {
+				border-left:	$mainCol solid $activeBorder;
+				padding-left: 	$activePadding;
+			}
+
+			a{
+				text-decoration : none;
+				color: $secondaryCol;
+
+				&:hover{
+					text-decoration: none;
+					color: lighten($secondaryCol, 20%);
+					font-weight: bold;
+				}
+			}
+		}
+	}
+}
+
+
+@media (min-width: 1200px) {
+  .page-side-menu {
+  	width: 19.6%;
+  }
+
+  .page-main-panel {
+  	width: 80%;
+  }
+}
+
+
+@media (min-width: 992px) and (max-width:1199px) {
+  .page-side-menu {
+  	width: 39.6%;
+  }
+
+  .page-main-panel {
+  	width: 60%;
+  }
 }

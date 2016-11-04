@@ -25,6 +25,27 @@
           
           <button type="button" class="btn btn-default display-inline-block" (click)="openMenuPickerModal()">Change</button>
         </div>
+        <hr>
+        <div class="restOpeningTimes">
+          <label for="rest_opening_times">Opening Times</label>
+          <div id="rest_opening_times col-lg-12 col-md-12 col-sm-12" name="rest_opening_times">
+            <button type="button" class="btn btn-default float-right standard-bottom-margin" (click)="addOpeningTimeModal.open()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            <table class="table">
+              <tr>
+                <th>Day(s)</th>
+                <th>Opening Time</th>
+                <th>Closing Time</th>
+                <th>Actions</th>
+              </tr>
+              <tr *ngFor="let openingTime of restaurant.opening_times; let o = index;">
+                <td>{{openingTime.days }}</td>
+                <td>{{openingTime.open}}</td>
+                <td>{{openingTime.close}}</td>
+                <td><button type="button" class="btn btn-danger" (click)="removeOpeningTime(o)">Remove</button></td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
 
     </form>
@@ -58,5 +79,58 @@
     <modal-footer>
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
         <button type="button" class="btn btn-default" (click)="deleteRestaurant()">Delete</button>
+    </modal-footer>
+</modal>
+
+<modal #addOpeningTimeModal>
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Add Opening Time</h4>
+    </modal-header>
+    <modal-body>
+        <div class="days">
+          <label> Monday
+            <input type="checkbox" [checked]="openingTimeToAdd.days.indexOf('Monday') > 0"
+            (change)="$event.target.checked? (openingTimeToAdd.addDay('Monday')) : (openingTimeToAdd.removeDay( 'Monday'))"/>
+          </label>
+
+          <label> Tuesday
+            <input type="checkbox" [checked]="openingTimeToAdd.days.indexOf('Tuesday') > 0"
+            (change)="$event.target.checked? (openingTimeToAdd.addDay('Tuesday')) : (openingTimeToAdd.removeDay( 'Tuesday'))"/>
+          </label>
+
+          <label> Wednesday
+            <input type="checkbox" [checked]="openingTimeToAdd.days.indexOf('Wednesday') > 0"
+            (change)="$event.target.checked? (openingTimeToAdd.addDay('Wednesday')) : (openingTimeToAdd.removeDay( 'Wednesday'))"/>
+          </label>
+
+          <label> Thursday
+            <input type="checkbox" [checked]="openingTimeToAdd.days.indexOf('Thursday') > 0"
+            (change)="$event.target.checked? (openingTimeToAdd.addDay('Thursday')) : (openingTimeToAdd.removeDay( 'Thursday'))"/>
+          </label>
+
+          <label> Friday
+            <input type="checkbox" [checked]="openingTimeToAdd.days.indexOf('Friday') > 0"
+            (change)="$event.target.checked? (openingTimeToAdd.addDay('Friday')) : (openingTimeToAdd.removeDay( 'Friday'))"/>
+          </label>
+
+          <label> Saturday
+            <input type="checkbox" [checked]="openingTimeToAdd.days.indexOf('Saturday') > 0"
+            (change)="$event.target.checked? (openingTimeToAdd.addDay('Saturday')) : (openingTimeToAdd.removeDay( 'Saturday'))"/>
+          </label>
+
+          <label> Sunday
+            <input type="checkbox" [checked]="openingTimeToAdd.days.indexOf('Sunday') > 0"
+            (change)="$event.target.checked? (openingTimeToAdd.addDay('Sunday')) : (openingTimeToAdd.removeDay( 'Sunday'))"/>
+          </label>
+          <label for="open_time">Opening Time</label>
+          <input type="time" name="open_time" [(ngModel)]="openingTimeToAdd.open">
+
+          <label for="close_time">Closing Time</label>
+          <input type="time" name="close_time" min="openingTimeToAdd.open" [(ngModel)]="openingTimeToAdd.close">
+        </div>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
+        <button type="button" class="btn btn-default" (click)="addOpeningTime()">Add</button>
     </modal-footer>
 </modal>

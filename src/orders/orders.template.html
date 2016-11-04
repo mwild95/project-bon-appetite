@@ -1,0 +1,10 @@
+<div class="page-side-menu display-inline-block">
+	<ul>
+		<li routerLinkActive="active-side-menu-element" [routerLinkActiveOptions]="{exact: true}" ><a routerLink="/orders/pending">Pending</a></li>
+		<li routerLinkActive="active-side-menu-element" [routerLinkActiveOptions]="{exact: true}" ><a routerLink="/orders/complete">Complete</a></li>
+	</ul>
+</div>
+
+<div class="page-main-panel display-inline-block">
+	<router-outlet></router-outlet>
+</div>

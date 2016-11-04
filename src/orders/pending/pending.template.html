@@ -1,0 +1,26 @@
+
+<div class="top-panel-actions">
+    <div class="titles">
+        <h3 class="section-title">Pending Order's</h3>
+    </div>
+    <div class="right buttons">
+        <!--<button class="btn btn-default right" type="button" (click)="addNewRestaurant()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>-->
+    </div>
+</div>
+
+<div class="panel-contents">
+    <table class="table">
+        <tr>
+            <th class="col-lg-4">Name</th>
+            <th class="col-lg-4">Actions</th>
+        </tr>
+        <tr *ngFor="let order of orders; let r = index;" (click)="selectOrder(order)">
+            <td>{{order.status}}</td>
+            <td>
+                <!--<button class="btn btn-default" type="button" (click)="selectRestaurant(restaurant)"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                <button class="btn btn-default" type="button" (click)="deleteRestaurant(restaurant)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                <button class="btn btn-default" type="button" (click)="navRestaurantOrders(restaurant)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>-->
+            </td>
+        </tr>
+    </table>
+</div>

@@ -15,7 +15,7 @@ div.top-panel-actions {
   div.top-panel-actions .left {
     float: left; }
   div.top-panel-actions .titles {
-    border-bottom: #e6f2f0 solid 5px;
+    border-bottom: #d3e3fc solid 5px;
     margin-left: -5px;
     padding-left: 5px; }
   div.top-panel-actions .buttons {
@@ -37,19 +37,19 @@ div.panel-contents {
   margin-bottom: 5px; }
 
 .btn-default {
-  border-color: #80BFB4; }
+  border-color: #4286f4; }
   .btn-default:hover {
-    border-color: #80BFB4;
-    background-color: #e6f2f0; }
+    border-color: #4286f4;
+    background-color: #d3e3fc; }
   .btn-default:focus {
-    border-color: #5eaea0;
-    background-color: #80BFB4; }
+    border-color: #1267f1;
+    background-color: #4286f4; }
   .btn-default:active {
-    border-color: #5eaea0;
-    background-color: #80BFB4; }
+    border-color: #1267f1;
+    background-color: #4286f4; }
   .btn-default:active:focus {
-    border-color: #5eaea0;
-    background-color: #80BFB4; }
+    border-color: #1267f1;
+    background-color: #4286f4; }
 
 .btn {
   border-radius: 0px; }
@@ -83,3 +83,39 @@ hr {
 
 .modal-content {
   border-radius: 0px; }
+
+.page-main-panel {
+  padding-right: 0px; }
+
+.page-side-menu {
+  padding: 10px 10px 10px 0px;
+  background-color: #d3e3fc;
+  height: 100%; }
+  .page-side-menu ul {
+    padding-left: 0px; }
+    .page-side-menu ul li {
+      list-style-type: none;
+      font-size: 1.3em;
+      padding: 2px 2px 2px 20px; }
+      .page-side-menu ul li.active-side-menu-element {
+        border-left: #4286f4 solid 7px;
+        padding-left: 13px; }
+      .page-side-menu ul li a {
+        text-decoration: none;
+        color: #0A1C29; }
+        .page-side-menu ul li a:hover {
+          text-decoration: none;
+          color: #1e547b;
+          font-weight: bold; }
+
+@media (min-width: 1200px) {
+  .page-side-menu {
+    width: 19.6%; }
+  .page-main-panel {
+    width: 80%; } }
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .page-side-menu {
+    width: 39.6%; }
+  .page-main-panel {
+    width: 60%; } }

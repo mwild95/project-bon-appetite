@@ -48,6 +48,20 @@ export class UserService {
             );*/
     }
 
+    public createUser ( user: User ) : Promise<any> {
+        return new Promise( (resolve, reject) => {
+            this.restService.createUser( user ) 
+                .subscribe(
+                    userResponse => {
+                        resolve(user);
+                    },
+                    err => {
+                        reject( JSON.parse(err._body) );
+                    }
+                );
+        });
+    }
+
     logout ( ) {
         this.loggedIn = false;
     }
