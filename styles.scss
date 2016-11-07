@@ -19,6 +19,9 @@ div.top-panel-actions {
 	margin-top: -10px;
 	display: 	inline-block;
 
+	height: 	23%;
+	max-height:	75px;
+
 	.right{
 		float: right
 	}
@@ -47,6 +50,7 @@ div.top-panel-actions {
 div.panel-contents{
 	padding: 		$standardPadding;
 	padding-top:	0px;
+	height: 79%;
 }
 
 .page-content {

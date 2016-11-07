@@ -4,23 +4,26 @@
         <h3 class="section-title">Pending Order's</h3>
     </div>
     <div class="right buttons">
-        <!--<button class="btn btn-default right" type="button" (click)="addNewRestaurant()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>-->
+        <button class="btn btn-default right" type="button" (click)="refreshOrders()">Refresh <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
     </div>
 </div>
 
 <div class="panel-contents">
-    <table class="table">
-        <tr>
-            <th class="col-lg-4">Name</th>
-            <th class="col-lg-4">Actions</th>
-        </tr>
-        <tr *ngFor="let order of orders; let r = index;" (click)="selectOrder(order)">
-            <td>{{order.status}}</td>
-            <td>
-                <!--<button class="btn btn-default" type="button" (click)="selectRestaurant(restaurant)"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                <button class="btn btn-default" type="button" (click)="deleteRestaurant(restaurant)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-                <button class="btn btn-default" type="button" (click)="navRestaurantOrders(restaurant)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>-->
-            </td>
-        </tr>
-    </table>
+    <div *ngFor="let order of orders; let r = index;" class="col-lg-4 col-md-6 col-sm-12 order_container">
+    	<div class="inner-container">
+    		<h1>{{order.status}}</h1>
+    		<h1>{{(moment.duration(today.getTime() - order.createdAt.getTime())).hours()}}:{{(moment.duration(today.getTime() - order.createdAt.getTime())).minutes()}}:{{(moment.duration(today.getTime() - order.createdAt.getTime())).seconds()}}</h1>
+            <h3 *ngFor="let product of order.products">{{product.name}}</h3>
+    		<div class="bottom status_buttons">
+    			<div class="col-lg-3 col-md-3 col-sm-3 inline-block" style="padding:0px;"><button type="button" class="btn btn-default" (click)="changeStatus(0,order)">Pending</button></div>
+    			<div class="col-lg-3 col-md-3 col-sm-3 inline-block" style="padding:0px;"><button type="button" class="btn btn-default" (click)="changeStatus(1,order)">In Progress</button></div>
+    			<div class="col-lg-3 col-md-3 col-sm-3 inline-block" style="padding:0px;"><button type="button" class="btn btn-default" (click)="changeStatus(2,order)">Complete</button></div>
+    			<div class="col-lg-3 col-md-3 col-sm-3 inline-block" style="padding:0px;"><button type="button" class="btn btn-default" (click)="changeStatus(3,order)">Cancel</button></div>
+    			
+    			
+    			
+    			
+    		</div>
+    	</div>
+    </div>
 </div>

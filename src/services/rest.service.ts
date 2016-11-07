@@ -238,9 +238,9 @@ export class RestService {
             .map( res => res.json() ); 
     }
 
-    public getOrders ( restaurantId : string ) : Observable<Order[]> {
+    public getOrders ( restaurantId : string, status : string ) : Observable<Order[]> {
         let endPoint : string = this.order_endpoint + this.single_restaurant_endpoint;
-        return this.http.get( this.rest_server + endPoint + restaurantId )
+        return this.http.get( this.rest_server + endPoint + restaurantId + "?status=" + status )
             .map( res => res.json() );
     }
 

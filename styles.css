@@ -9,7 +9,9 @@ div.top-panel-actions {
   width: 99%;
   margin: 5px;
   margin-top: -10px;
-  display: inline-block; }
+  display: inline-block;
+  height: 23%;
+  max-height: 75px; }
   div.top-panel-actions .right {
     float: right; }
   div.top-panel-actions .left {
@@ -26,7 +28,8 @@ div.top-panel-actions {
 
 div.panel-contents {
   padding: 10px;
-  padding-top: 0px; }
+  padding-top: 0px;
+  height: 79%; }
 
 .page-content {
   width: 100%;

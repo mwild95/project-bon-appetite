@@ -30,9 +30,9 @@ export class OrdersService {
         } );
     }
 
-    public getOrders ( restaurantId : string ) : Promise< Order[] >{
+    public getOrders ( restaurantId : string, status : string ) : Promise< Order[] >{
         return new Promise( (resolve, reject) => {
-            this.restService.getOrders( restaurantId )
+            this.restService.getOrders( restaurantId, status )
                 .subscribe(
                     (response: Order[]) => {
                         this.orders = this.castOrders( response );

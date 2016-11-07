@@ -1,0 +1,24 @@
+@import "./src/sass/variables";
+
+.order_container {
+	height: calc(50% - #{(2 * $standardMargin)});
+	margin-bottom: 15px;
+
+	.inner-container{
+		border: 1px solid $mainCol;
+		margin: $standardMargin/2;
+		height: 100%;
+		width:100%;
+
+		div.bottom.status_buttons{
+			border-top: 1px solid $mainCol;
+			position: absolute;
+			bottom: 0;	
+
+			button {
+				max-width: 100%;
+			}
+		}
+	}
+	
+}

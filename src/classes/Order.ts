@@ -6,11 +6,18 @@ export class Order {
 	private _id : string;
 	private products : Product[];
 	private restaurant : string;
-	private status : OrderStatus;
+	private status : string;
+	private createdAt : Date;
 
 	constructor ( private productJSON: {} ) {
 		for( var jsonKey in this.productJSON ) {
-			this[jsonKey] = this.productJSON[jsonKey];
+			
+
+			if(jsonKey == "createdAt"){
+				this[jsonKey] = new Date(this.productJSON[jsonKey]);
+			} else {
+				this[jsonKey] = this.productJSON[jsonKey];
+			}
 		}
 		delete this.productJSON;
 	}
@@ -35,11 +42,11 @@ export class Order {
 		this.products.push( _product );
 	} 
 
-	public getStatus ( ) : OrderStatus {
+	public getStatus ( ) : string {
 		return this.status;
 	}
 
-	public setStatus ( _status : OrderStatus ) : void {
+	public setStatus ( _status : string ) : void {
 		this.status = _status;
 	}
 
