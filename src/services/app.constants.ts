@@ -1,5 +1,6 @@
 module.exports = {
-	"REST_SERVER" 	: "http://54.71.231.16:3000/api/",
+	"REST_SERVER" 	: "http://35.164.11.97:3000/api/",
+
 	"APP_NAME"		: "Bon Appetite",
 
 	//Users
@@ -26,6 +27,9 @@ module.exports = {
 
 	//ORDERS
 	"ORDERS_ENDPOINT" : "orders/",
+
+	//TABLE
+	"TABLE_ENDPOINT" : "tables/",
 
 
 	//Misc

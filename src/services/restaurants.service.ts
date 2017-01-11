@@ -94,6 +94,20 @@ export class RestaurantsService {
         });
     }
 
+    public createTable ( tableName : string, restaurant : string ) {
+        return new Promise( ( resolve, reject ) => {
+            this.restService.createTable ( tableName, restaurant )
+                .subscribe (
+                    ( response ) => {
+                        resolve( response );
+                    },
+                    err => {
+                        reject(JSON.parse(err._body));
+                    }
+                );
+        });
+    }
+
     private castRestaurants( restaurants: any[] ) {
         for( let i=0; i<restaurants.length; i++ ) {
             var restaurant = restaurants[i];

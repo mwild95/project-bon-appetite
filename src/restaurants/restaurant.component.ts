@@ -9,6 +9,7 @@ import { RestaurantsService } from '../services/restaurants.service';
 import { Restaurant } from '../classes/Restaurant';
 import { Menu } from '../classes/Menu';
 import { OpeningTimes } from '../classes/OpeningTimes';
+import { Table } from '../classes/Table';
 
 import { ModalComponent } from '../modal/modal.module';
 
@@ -37,6 +38,9 @@ export class RestaurantComponent {
 
 	@ViewChild('addOpeningTimeModal')
 	addOpeningTimeModal :ModalComponent;
+
+	@ViewChild('addTableModal')
+	addTableModal : ModalComponent;
 	
 	constructor ( private route : ActivatedRoute, private cache : CacheService, private router : Router, private MenuService : MenuService, private RestaurantsService: RestaurantsService ) {
 	}
@@ -138,5 +142,20 @@ export class RestaurantComponent {
 
 	removeOpeningTime ( index : number ) {
 		this.restaurant.setOpeningTimes(<OpeningTimes[]>this.restaurant.getOpeningTimes().splice(index, 1));
+	}
+
+	createNewTable ( newTableName: string) {
+		let newTable: Table;
+		this.RestaurantsService.createTable( newTableName, this.restaurant.getId() ).then(
+			result => {
+				if ( typeof result != 'undefined' ){
+					this.addTableModal.close();
+					this.restaurant.addTable( new Table(result) );
+				}
+			},
+			err => {
+				alert(err.message);
+			}
+		);
 	}
 }

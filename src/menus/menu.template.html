@@ -2,14 +2,18 @@
     <div class="titles">
         <h3 class="section-title">Manage - {{menu.name}}</h3>
     </div>
+    <div class="left tabs">
+        <button type="button" class="btn btn-default" (click)="tab=0">Overview</button>
+        <button type="button" class="btn btn-default" (click)="tab=1;">View</button>
+    </div>
     <div class="right buttons">
-        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Delete <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()" [hidden]="tab!=0">Delete <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
         <button type="button" class="btn btn-default" (click)="onCancel()">Cancel <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <button class="btn btn-default right" type="button" (click)="onSubmit()" [disabled]="!menuForm.form.valid">Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+        <button class="btn btn-default right" type="button" (click)="onSubmit()" [disabled]="!menuForm.form.valid" [hidden]="tab!=0">Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
     </div>
 </div>
 
-<div class="container full-width">
+<div class="container full-width" #tab0 [hidden]="tab!=0">
     <form (ngSubmit)="onSubmit()" #menuForm="ngForm">
       <div class="form-group">
         <label for="menu_name">Menu Name</label>
@@ -30,6 +34,16 @@
       </div>
 
     </form>
+</div>
+
+<div class="container full-width" #tab1 [hidden]="tab!=1">
+    <h1>{{menu.name}}</h1>
+    <div *ngFor="let section of menu.sections">
+        <h2>{{section.name}} - {{section.description}}</h2>
+        <div *ngFor="let product of section.products">
+            <h3>{{product.name}} - {{product.price}}</h3>
+        </div>
+    </div>
 </div>
 
 <modal #deleteMenuModal>

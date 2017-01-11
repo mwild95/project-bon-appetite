@@ -18,6 +18,8 @@ declare var $:any;
 })
 
 export class MenuComponent { 
+	//set the tab to the first one
+	tab : number = 0;
 
 	menu: Menu;
 	availableSections : Section[];

@@ -13,10 +13,13 @@
 <div class="container full-width">
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <div class="form-group">
-        <label for="rest_name">Restaurant Name</label>
-        <input type="text" class="form-control col-lg-12 col-md-12 col-sm-12" id="rest_name" [(ngModel)]="restaurant.name" name="rest_name" required>
-        <hr>
-        <div class="restMenu">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <label for="rest_name">Restaurant Name</label>
+        <input type="text" class="form-control" id="rest_name" [(ngModel)]="restaurant.name" name="rest_name" required>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-0"></div>
+        
+        <div class="restMenu col-lg-6 col-md-6 col-sm-12">
           <label for="rest_menu" class="">Menu</label><br/>
           <div class="col-lg-3 col-md-6 col-sm-12 display-inline-block no-left-padding">
               <input type="text" class="readonly display-inline-block standard-right-margin form-control" id="rest_menu" name="rest_menu" *ngIf="restaurant.menu == null" value="No Menu Set"/>
@@ -25,6 +28,7 @@
           
           <button type="button" class="btn btn-default display-inline-block" (click)="openMenuPickerModal()">Change</button>
         </div>
+        <hr>
         <hr>
         <div class="restOpeningTimes">
           <label for="rest_opening_times">Opening Times</label>
@@ -42,6 +46,27 @@
                 <td>{{openingTime.open}}</td>
                 <td>{{openingTime.close}}</td>
                 <td><button type="button" class="btn btn-danger" (click)="removeOpeningTime(o)">Remove</button></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="restTables">
+          <label for="rest_tables">Tables</label>
+          <div id="rest_tables col-lg-12 col-md-12 col-sm-12" name="rest_tables">
+            <button type="button" class="btn btn-default float-right standard-bottom-margin" (click)="addTableModal.open()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            <table class="table">
+              <tr>
+                <th>Name</th>
+                <th>Seats</th>
+                <th>Occupants</th>
+                <th>Actions</th>
+              </tr>
+              <tr *ngFor="let table of restaurant.tables; let o = index;">
+                <td>{{table.name }}</td>
+                <td>{{table.capacity}}</td>
+                <td>{{table.occupants}}</td>
+                <td><button type="button" class="btn btn-danger" (click)="removeTable(o)">Remove</button></td>
               </tr>
             </table>
           </div>
@@ -134,3 +159,24 @@
         <button type="button" class="btn btn-default" (click)="addOpeningTime()">Add</button>
     </modal-footer>
 </modal>
+
+<modal #addTableModal>
+  <form (ngSubmit)="createNewTable(newTableName.value)" #tableForm="ngForm">
+      <div class="form-group">
+    
+        <modal-header [show-close]="true">
+            <h4 class="modal-title">Add New Table</h4>
+        </modal-header>
+        <modal-body>
+            <label for="newTableName">Name</label>
+            <input type="text" class="form-control" id="newTableName" #newTableName required/>
+        </modal-body>
+        <modal-footer>
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
+            <button type="submit" class="btn btn-default" [disabled]="!tableForm.form.valid">Create</button>
+        </modal-footer>
+    
+      </div>
+
+  </form>
+</modal> 

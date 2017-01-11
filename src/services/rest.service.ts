@@ -13,6 +13,7 @@ import { Ingredient } from '../classes/Ingredient';
 import { Product } from '../classes/Product';
 import { Section } from '../classes/Section';
 import { Order } from '../classes/Order';
+import { Table } from '../classes/Table';
 
 @Injectable()
 export class RestService {
@@ -25,6 +26,7 @@ export class RestService {
     private section_endpoint : string;
     private order_endpoint : string;
     private single_restaurant_endpoint : string;
+    private table_endpoint : string;
 
     constructor ( private constantsService : ConstantsService, private http : Http ) {
     	this.rest_server = this.constantsService.get( "REST_SERVER" );
@@ -35,6 +37,7 @@ export class RestService {
         this.section_endpoint = this.constantsService.get("SECTIONS_ENDPOINT");
         this.order_endpoint = this.constantsService.get("ORDERS_ENDPOINT");
         this.single_restaurant_endpoint = this.constantsService.get("RESTAURANT_ENDPOINT");
+        this.table_endpoint = this.constantsService.get("TABLE_ENDPOINT");
     }
 
     
@@ -95,6 +98,13 @@ export class RestService {
     public updateRestaurant ( restToUpdate : Restaurant ) : Observable< Restaurant >{
         let endPoint : string = this.restaurant_endpoint;
         return this.http.put( this.rest_server + endPoint + restToUpdate.getId(), restToUpdate )
+            .map( res => res.json() );
+    }
+
+    public createTable ( tableName : string, restaurant: string ) : Observable< Table > {
+        let bodyToSend = {"name": tableName, "restaurant" : restaurant };
+        let endPoint : string = this.table_endpoint;
+        return this.http.post( this.rest_server + endPoint, bodyToSend)
             .map( res => res.json() );
     }
 
