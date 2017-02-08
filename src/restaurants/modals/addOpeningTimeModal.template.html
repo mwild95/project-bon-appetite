@@ -1,0 +1,21 @@
+<h1 md-dialog-title>Add an Opening Time</h1>
+<div md-dialog-content>
+	<div class="days">
+		<md-checkbox ng-checked="openingTime.days.indexOf('Monday') > -1" (change)="$event.checked? (openingTime.addDay('Monday')) : (openingTime.removeDay('Monday'))">Monday</md-checkbox>
+		<md-checkbox ng-checked="openingTime.days.indexOf('Tuesday') > -1" (change)="$event.checked? (openingTime.addDay('Tuesday')) : (openingTime.removeDay('Tuesday'))">Tuesday</md-checkbox>
+		<md-checkbox ng-checked="openingTime.days.indexOf('Wednesday') > -1" (change)="$event.checked? (openingTime.addDay('Wednesday')) : (openingTime.removeDay('Wednesday'))">Wednesday</md-checkbox>
+		<md-checkbox ng-checked="openingTime.days.indexOf('Thursday') > -1" (change)="$event.checked? (openingTime.addDay('Thursday')) : (openingTime.removeDay('Thursday'))">Thursday</md-checkbox>
+		<md-checkbox ng-checked="openingTime.days.indexOf('Friday') > -1" (change)="$event.checked? (openingTime.addDay('Friday')) : (openingTime.removeDay('Friday'))">Friday</md-checkbox>
+		<md-checkbox ng-checked="openingTime.days.indexOf('Saturday') > -1" (change)="$event.checked? (openingTime.addDay('Saturday')) : (openingTime.removeDay('Saturday'))">Saturday</md-checkbox>
+		<md-checkbox ng-checked="openingTime.days.indexOf('Sunday') > -1" (change)="$event.checked? (openingTime.addDay('Sunday')) : (openingTime.removeDay('Sunday'))">Sunday</md-checkbox>
+	</div>
+	<label for="open_time">Opening Time</label>
+	  <input type="time" name="open_time" [(ngModel)]="openingTime.open">
+
+	  <label for="close_time">Closing Time</label>
+	  <input type="time" name="close_time" min="openingTime.open" [(ngModel)]="openingTime.close">
+</div>
+<div md-dialog-actions>
+    <button md-button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+    <button md-button type="button" class="btn btn-default" (click)="submit()">Add</button>
+</div>

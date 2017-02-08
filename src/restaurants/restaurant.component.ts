@@ -1,10 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { CacheService } from '../services/cache.service';
 import { MenuService } from '../services/menu.service';
 import { RestaurantsService } from '../services/restaurants.service';
+import { ImagesService } from '../services/images.service';
+import { ErrorService } from '../services/error.service';
 
 import { Restaurant } from '../classes/Restaurant';
 import { Menu } from '../classes/Menu';
@@ -12,6 +15,12 @@ import { OpeningTimes } from '../classes/OpeningTimes';
 import { Table } from '../classes/Table';
 
 import { ModalComponent } from '../modal/modal.module';
+
+import { MenuPickerModalComponent} from './modals/menuPickerModal.component'; 
+import { DeleteRestaurantModalComponent } from './modals/deleteRestaurantModal.component';
+import { AddOpeningTimeModalComponent } from './modals/addOpeningTimeModal.component';
+import { AddTableModalComponent } from './modals/addTableModal.component';
+
 
 
 declare var $:any;
@@ -28,21 +37,13 @@ export class RestaurantComponent {
 	availableMenus : Menu[];
 	currentlySelectedMenu: Menu;
 
-	openingTimeToAdd = new OpeningTimes({days:[], open: "10:00", close: "22:00"});
 
-	@ViewChild('menuPickerModal')
-	menuPickerModal: ModalComponent;
 
-	@ViewChild('deleteRestaurantModal')
-	deleteRestaurantModal: ModalComponent;
-
-	@ViewChild('addOpeningTimeModal')
-	addOpeningTimeModal :ModalComponent;
-
-	@ViewChild('addTableModal')
-	addTableModal : ModalComponent;
+	@ViewChild('logoImagePicker')
+	logoImagePicker: HTMLInputElement;
 	
-	constructor ( private route : ActivatedRoute, private cache : CacheService, private router : Router, private MenuService : MenuService, private RestaurantsService: RestaurantsService ) {
+	constructor ( private route : ActivatedRoute, private cache : CacheService, private router : Router, private MenuService : MenuService, private RestaurantsService: RestaurantsService, private imagesService: ImagesService, public dialog : MdDialog, private errorService : ErrorService ) {
+		
 	}
 
 	ngOnInit () {
@@ -105,56 +106,85 @@ export class RestaurantComponent {
 
 	//Menu modal dialog functions ///////////////////
 	openMenuPickerModal () {
-		this.menuPickerModal.open();
-	}
+		let menuData = {menus: this.availableMenus, current: this.restaurant.getMenu()};
+		this.cache.put('menuPickerModalData', menuData);
+		let menuPickerModalRef = this.dialog.open(MenuPickerModalComponent);
+		menuPickerModalRef.afterClosed().subscribe(result => {
+			if(typeof result == 'object') {
+				this.restaurant.setMenu(result);
+			} else {
+				//N/A
+			}
+		});
 
-	selectMenu (value:Menu) {
-		if( typeof this.currentlySelectedMenu == 'undefined' || this.currentlySelectedMenu.toString() == "undefined" ) {
-			this.currentlySelectedMenu = undefined;
-		}
-		
-		this.restaurant.setMenu( this.currentlySelectedMenu );
-		this.menuPickerModal.close();
 	}
 	/////////////////////////////////////////////////
 
 	//Delete Restaurant modal stuff//////////////////
 	confirmDelete ( ) {
-		this.deleteRestaurantModal.open();
-	}
-
-	deleteRestaurant ( ) {
-		this.RestaurantsService.deleteRestaurant( this.restaurant.getId() ).then(
-			( response ) => { this.onFinish(); },
-			err => { alert(err.message); }
-		);
-		
+		this.cache.put('restaurantDeleteModalData', this.restaurant);
+		let deleteRestaurantModalRef = this.dialog.open(DeleteRestaurantModalComponent);
+		deleteRestaurantModalRef.afterClosed().subscribe(result => {
+			if(!result){
+				//Delete was cancelled do nothing
+			} else if (typeof result == 'object'){
+				//there was an error, display the error
+				this.errorService.showError(result);
+			} else {
+				//restaurant was deleted
+				//bounce to restaurant list
+				this.onFinish()
+			}
+		});
 	}
 	/////////////////////////////////////////////////
 
 
 	///// Opening Times//////////////
 	addOpeningTime ( ) {
-		this.restaurant.addOpeningTime(this.openingTimeToAdd);
-		this.openingTimeToAdd = new OpeningTimes({days:[], open: "10:00", close: "22:00"});
-		this.addOpeningTimeModal.close();
+		let addOpeningTimeModalRef = this.dialog.open(AddOpeningTimeModalComponent);
+		addOpeningTimeModalRef.afterClosed().subscribe(result =>{
+			if(typeof result == 'object'){
+				this.restaurant.addOpeningTime(result);
+			} else {
+				//n/a
+			} 
+		});
 	}
 
 	removeOpeningTime ( index : number ) {
-		this.restaurant.setOpeningTimes(<OpeningTimes[]>this.restaurant.getOpeningTimes().splice(index, 1));
+		let current : OpeningTimes[] = this.restaurant.getOpeningTimes();
+		current.splice(index,1);
+		this.restaurant.setOpeningTimes(current);
 	}
+	///////////////////////////////
+
+	//////////////////////Table Stuff///////////
 
 	createNewTable ( newTableName: string) {
-		let newTable: Table;
-		this.RestaurantsService.createTable( newTableName, this.restaurant.getId() ).then(
-			result => {
-				if ( typeof result != 'undefined' ){
-					this.addTableModal.close();
-					this.restaurant.addTable( new Table(result) );
-				}
+		this.cache.put("tableModalData", this.restaurant.getId());
+		let addTableModalRef = this.dialog.open(AddTableModalComponent);
+		addTableModalRef.afterClosed().subscribe(result =>{
+			if(result != false){
+				this.restaurant.addTable( result ) ;
+			}
+		});
+	}
+	//////////////////////////////////////////
+
+	uploadImage ( ) {
+		let fileObj: File = this.logoImagePicker.nativeElement.files[0];
+		let formData = new FormData();
+	    formData.append("file", fileObj, this.restaurant.getId() + "_logo_image");
+		
+		this.imagesService.uploadImage(formData).then(
+			(response)=>{
+				this.restaurant.setLogoUrl(response);
+				this.saveChanges();
+				alert("image saved");
 			},
 			err => {
-				alert(err.message);
+				alert("Something went wrong with the image upload! Please try again");
 			}
 		);
 	}

@@ -2,17 +2,18 @@ import { Component, ViewChild } from '@angular/core';
 import { Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
+
 import { CacheService } from '../services/cache.service';
 import { MenuService } from '../services/menu.service';
 import { ProductsService } from '../services/products.service';
 import { IngredientsService } from '../services/ingredients.service';
+import { ImagesService } from '../services/images.service';
 
 import { Product } from '../classes/Product';
 import { Menu } from '../classes/Menu';
 import { Ingredient } from '../classes/Ingredient';
 
 import { ModalComponent } from '../modal/modal.module';
-
 
 declare var $:any;
 
@@ -35,8 +36,11 @@ export class ProductComponent {
 
 	@ViewChild('addIngredientModal')
 	addIngredientModal : ModalComponent;
+
+	@ViewChild('productImagePicker')
+	productImagePicker: HTMLInputElement;
 	
-	constructor ( private route : ActivatedRoute, private cache : CacheService, private router : Router, private ProductsService: ProductsService, private ingredientsService: IngredientsService ) {
+	constructor ( private route : ActivatedRoute, private cache : CacheService, private router : Router, private ProductsService: ProductsService, private ingredientsService: IngredientsService, private imagesService: ImagesService ) {
 
 	}
 
@@ -133,5 +137,23 @@ export class ProductComponent {
 		this.product.setIngredients(currentArray);
 	}
 	///////////////////////////////////////////////
+
+	uploadImage () {
+		let fileObj: File = this.productImagePicker.nativeElement.files[0];
+		let formData = new FormData();
+	    formData.append("file", fileObj, this.product.getId() + "_product_image");
+		
+		this.imagesService.uploadImage(formData).then(
+			(response)=>{
+				this.product.setImageUrl(response);
+				this.saveChanges();
+				alert("image saved");
+			},
+			err => {
+				alert("Something went wrong with the image upload! Please try again");
+			}
+		);
+	}
+
 
 }

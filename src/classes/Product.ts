@@ -7,6 +7,8 @@ export class Product {
 	private description : string;
 	private price : Number;
 	private ingredients : Ingredient[];
+	private owning_user : string;
+	private image_url : string;
 
 	private pristine : boolean = false;
 	
@@ -65,6 +67,19 @@ export class Product {
 
 	public isPristine ( ) {
 		return this.pristine;
+	}
+
+	public getOwningUser ( ) {
+		return this.owning_user;
+	}
+
+	public getImageUrl ( ) {
+		return this.image_url;
+	}
+
+
+	public setImageUrl ( url : string ) {
+		this.image_url = url;
 	}
 
 

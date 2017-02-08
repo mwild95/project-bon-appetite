@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { Restaurant } from '../classes/Restaurant';
 import { RestaurantsService } from '../services/restaurants.service';
@@ -8,6 +9,8 @@ import { RestaurantsService } from '../services/restaurants.service';
 import { CacheService } from '../services/cache.service';
 
 import { ModalComponent } from '../modal/modal.module';
+
+import { AddRestaurantModalComponent } from './modals/addRestaurantModal.component';
 
 @Component({
   templateUrl: './src/restaurants/restaurantsList.template.html',
@@ -21,7 +24,7 @@ export class RestaurantsListComponent {
 	@ViewChild('newRestaurantModal')
 	newRestaurantModal: ModalComponent;
 
-	constructor ( private restaurantsService : RestaurantsService, private cache : CacheService, private router : Router ) {
+	constructor ( private restaurantsService : RestaurantsService, private cache : CacheService, private router : Router, public dialog: MdDialog ) {
 
 	}
 
@@ -53,21 +56,16 @@ export class RestaurantsListComponent {
 
 //////////add restaurant modal stuff//////////
 	addNewRestaurant ( ) {
-		this.newRestaurantModal.open();
+		let newRestDialogRef = this.dialog.open(AddRestaurantModalComponent, {width:'auto',height:'auto'});
+		newRestDialogRef.afterClosed().subscribe(result => {
+			console.log(typeof result);
+			if(typeof result == 'object') {
+				this.selectRestaurant(result);
+			} else {
+				//N/A
+			}
+		});
 	}
 
-	createNewRestaurant ( newRestName: string) {
-		let newRestaurant: Restaurant;
-		this.restaurantsService.createRestaurant( newRestName ).then(
-			result => {
-				if ( typeof result != 'undefined' ){
-					this.selectRestaurant( result );
-				}
-			},
-			err => {
-				alert(err.message);
-			}
-		);
-	}
 	///////////////////////////////////////////
 }

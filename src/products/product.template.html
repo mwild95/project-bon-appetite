@@ -30,6 +30,9 @@
       </div>
 
     </form>
+
+    <input type="file" #productImagePicker /><button type="button" (click)="uploadImage()">Upload</button>
+    <img [src]="product.getImageUrl()"/>
 </div>
 
 

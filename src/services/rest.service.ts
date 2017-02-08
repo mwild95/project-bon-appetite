@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 
@@ -270,5 +270,11 @@ export class RestService {
         let endPoint : string = this.order_endpoint;
         return this.http.put( this.rest_server + endPoint + restToUpdate.getId(), restToUpdate )
             .map( res => res.json() );
+    }
+
+    public uploadImage ( image: FormData){
+        let endPoint : string = "images";
+        return this.http.post(this.rest_server + endPoint, image);
+            //.map( res => res.toString() );
     }
 }

@@ -14,4 +14,4 @@ import { PageNotFoundComponent }  from './pagenotfound.component';
   bootstrap:    [ ]
 })
 
-export class NavbarModule { }
+export class GeneralModule { }

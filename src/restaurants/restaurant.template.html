@@ -12,171 +12,97 @@
 
 <div class="container full-width">
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-      <div class="form-group">
-        <div class="col-lg-6 col-md-6 col-sm-12">
+      <md-tab-group>
+        <md-tab label="Overview">
+          <hr>
+          <div class="col-lg-6 col-md-6 col-sm-12">
           <label for="rest_name">Restaurant Name</label>
-        <input type="text" class="form-control" id="rest_name" [(ngModel)]="restaurant.name" name="rest_name" required>
-        </div>
-        <div class="col-lg-1 col-md-1 col-sm-0"></div>
-        
-        <div class="restMenu col-lg-6 col-md-6 col-sm-12">
-          <label for="rest_menu" class="">Menu</label><br/>
-          <div class="col-lg-3 col-md-6 col-sm-12 display-inline-block no-left-padding">
-              <input type="text" class="readonly display-inline-block standard-right-margin form-control" id="rest_menu" name="rest_menu" *ngIf="restaurant.menu == null" value="No Menu Set"/>
-              <input type="text" readonly class="display-inline-block standard-right-margin form-control" id="rest_menu" name="rest_menu" *ngIf="restaurant.menu" [value]="restaurant.menu.name"/>
+          <input type="text" class="form-control" id="rest_name" [(ngModel)]="restaurant.name" name="rest_name" required>
           </div>
+          <div class="col-lg-3 col-md-3 col-sm-0"></div>
           
-          <button type="button" class="btn btn-default display-inline-block" (click)="openMenuPickerModal()">Change</button>
-        </div>
-        <hr>
-        <hr>
-        <div class="restOpeningTimes">
-          <label for="rest_opening_times">Opening Times</label>
-          <div id="rest_opening_times col-lg-12 col-md-12 col-sm-12" name="rest_opening_times">
-            <button type="button" class="btn btn-default float-right standard-bottom-margin" (click)="addOpeningTimeModal.open()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-            <table class="table">
-              <tr>
-                <th>Day(s)</th>
-                <th>Opening Time</th>
-                <th>Closing Time</th>
-                <th>Actions</th>
-              </tr>
-              <tr *ngFor="let openingTime of restaurant.opening_times; let o = index;">
-                <td>{{openingTime.days }}</td>
-                <td>{{openingTime.open}}</td>
-                <td>{{openingTime.close}}</td>
-                <td><button type="button" class="btn btn-danger" (click)="removeOpeningTime(o)">Remove</button></td>
-              </tr>
-            </table>
+          <div class="restMenu col-lg-6 col-md-6 col-sm-12">
+            <label for="rest_menu" class="">Menu</label><br/>
+            <div class="col-lg-3 col-md-6 col-sm-12 display-inline-block no-left-padding">
+                <input type="text" class="readonly display-inline-block standard-right-margin form-control" id="rest_menu" name="rest_menu" *ngIf="restaurant.menu == null" value="No Menu Set"/>
+                <input type="text" readonly class="display-inline-block standard-right-margin form-control" id="rest_menu" name="rest_menu" *ngIf="restaurant.menu" [value]="restaurant.menu.name"/>
+            </div>
+            
+            <button type="button" class="btn btn-default display-inline-block" (click)="openMenuPickerModal()">Change</button>
           </div>
-        </div>
+        </md-tab>
 
-        <div class="restTables">
-          <label for="rest_tables">Tables</label>
-          <div id="rest_tables col-lg-12 col-md-12 col-sm-12" name="rest_tables">
-            <button type="button" class="btn btn-default float-right standard-bottom-margin" (click)="addTableModal.open()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-            <table class="table">
-              <tr>
-                <th>Name</th>
-                <th>Seats</th>
-                <th>Occupants</th>
-                <th>Actions</th>
-              </tr>
-              <tr *ngFor="let table of restaurant.tables; let o = index;">
-                <td>{{table.name }}</td>
-                <td>{{table.capacity}}</td>
-                <td>{{table.occupants}}</td>
-                <td><button type="button" class="btn btn-danger" (click)="removeTable(o)">Remove</button></td>
-              </tr>
-            </table>
+
+
+
+        <md-tab label="Opening Times">
+          <div class="restOpeningTimes">
+            <div id="rest_opening_times col-lg-12 col-md-12 col-sm-12" name="rest_opening_times">
+              <button type="button" class="btn btn-default float-right standard-bottom-margin" (click)="addOpeningTime()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+              <table class="table">
+                <tr>
+                  <th>Day(s)</th>
+                  <th>Opening Time</th>
+                  <th>Closing Time</th>
+                  <th>Actions</th>
+                </tr>
+                <tr *ngFor="let openingTime of restaurant.opening_times; let o = index;">
+                  <td>{{openingTime.days }}</td>
+                  <td>{{openingTime.open}}</td>
+                  <td>{{openingTime.close}}</td>
+                  <td><button type="button" class="btn btn-danger" (click)="removeOpeningTime(o)">Remove</button></td>
+                </tr>
+              </table>
+            </div>
           </div>
-        </div>
-      </div>
+        </md-tab>
+
+
+
+        <md-tab label="Tables">
+          <div class="form-group">
+        
+            <div class="restTables">
+              <div id="rest_tables col-lg-12 col-md-12 col-sm-12" name="rest_tables">
+                <button type="button" class="btn btn-default float-right standard-bottom-margin" (click)="createNewTable()">Add <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                <table class="table">
+                  <tr>
+                    <th>Name</th>
+                    <th>Seats</th>
+                    <th>Occupants</th>
+                    <th>Qr Code</th>
+                    <th>Actions</th>
+                  </tr>
+                  <tr *ngFor="let table of restaurant.tables; let o = index;">
+                    <td>{{table.name }}</td>
+                    <td>{{table.capacity}}</td>
+                    <td>{{table.occupants}}</td>
+                    <td><qr-code [value]="restaurant._id + '&' + table._id" [size]="100" [canvas]="true"></qr-code></td>
+                    <td><button type="button" class="btn btn-danger" (click)="removeTable(o)">Remove</button></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </md-tab>
+
+
+
+
+
+        <md-tab label="Images">
+        <hr>
+          <input type="file" #logoImagePicker /><button type="button" (click)="uploadImage()">Upload</button>
+          <img [src]="restaurant.getLogoUrl()"/>
+        </md-tab>
+      </md-tab-group>
+      
 
     </form>
+    
 </div>
 
 
 
-<modal #menuPickerModal>
-    <modal-header [show-close]="true">
-        <h4 class="modal-title">Choose a Menu for this Restaurant</h4>
-    </modal-header>
-    <modal-body>
-        <select class="form-control" id="activeMenu" required [(ngModel)]="currentlySelectedMenu">
-          <option [ngValue]="null">No Menu</option>
-          <option *ngFor="let menu of availableMenus" [ngValue]="menu">{{menu.name}}</option>
-        </select>
-    </modal-body>
-    <modal-footer>
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
-        <button type="button" class="btn btn-default" (click)="selectMenu()">Select</button>
-    </modal-footer>
-</modal>
 
-<modal #deleteRestaurantModal>
-    <modal-header [show-close]="true">
-        <h4 class="modal-title">Are you sure?</h4>
-    </modal-header>
-    <modal-body>
-        <h2>Are you sure you want to delete {{restaurant.name}}</h2>
-    </modal-body>
-    <modal-footer>
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
-        <button type="button" class="btn btn-default" (click)="deleteRestaurant()">Delete</button>
-    </modal-footer>
-</modal>
 
-<modal #addOpeningTimeModal>
-    <modal-header [show-close]="true">
-        <h4 class="modal-title">Add Opening Time</h4>
-    </modal-header>
-    <modal-body>
-        <div class="days">
-          <label> Monday
-            <input type="checkbox" [checked]="openingTimeToAdd.days.indexOf('Monday') > 0"
-            (change)="$event.target.checked? (openingTimeToAdd.addDay('Monday')) : (openingTimeToAdd.removeDay( 'Monday'))"/>
-          </label>
-
-          <label> Tuesday
-            <input type="checkbox" [checked]="openingTimeToAdd.days.indexOf('Tuesday') > 0"
-            (change)="$event.target.checked? (openingTimeToAdd.addDay('Tuesday')) : (openingTimeToAdd.removeDay( 'Tuesday'))"/>
-          </label>
-
-          <label> Wednesday
-            <input type="checkbox" [checked]="openingTimeToAdd.days.indexOf('Wednesday') > 0"
-            (change)="$event.target.checked? (openingTimeToAdd.addDay('Wednesday')) : (openingTimeToAdd.removeDay( 'Wednesday'))"/>
-          </label>
-
-          <label> Thursday
-            <input type="checkbox" [checked]="openingTimeToAdd.days.indexOf('Thursday') > 0"
-            (change)="$event.target.checked? (openingTimeToAdd.addDay('Thursday')) : (openingTimeToAdd.removeDay( 'Thursday'))"/>
-          </label>
-
-          <label> Friday
-            <input type="checkbox" [checked]="openingTimeToAdd.days.indexOf('Friday') > 0"
-            (change)="$event.target.checked? (openingTimeToAdd.addDay('Friday')) : (openingTimeToAdd.removeDay( 'Friday'))"/>
-          </label>
-
-          <label> Saturday
-            <input type="checkbox" [checked]="openingTimeToAdd.days.indexOf('Saturday') > 0"
-            (change)="$event.target.checked? (openingTimeToAdd.addDay('Saturday')) : (openingTimeToAdd.removeDay( 'Saturday'))"/>
-          </label>
-
-          <label> Sunday
-            <input type="checkbox" [checked]="openingTimeToAdd.days.indexOf('Sunday') > 0"
-            (change)="$event.target.checked? (openingTimeToAdd.addDay('Sunday')) : (openingTimeToAdd.removeDay( 'Sunday'))"/>
-          </label>
-          <label for="open_time">Opening Time</label>
-          <input type="time" name="open_time" [(ngModel)]="openingTimeToAdd.open">
-
-          <label for="close_time">Closing Time</label>
-          <input type="time" name="close_time" min="openingTimeToAdd.open" [(ngModel)]="openingTimeToAdd.close">
-        </div>
-    </modal-body>
-    <modal-footer>
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
-        <button type="button" class="btn btn-default" (click)="addOpeningTime()">Add</button>
-    </modal-footer>
-</modal>
-
-<modal #addTableModal>
-  <form (ngSubmit)="createNewTable(newTableName.value)" #tableForm="ngForm">
-      <div class="form-group">
-    
-        <modal-header [show-close]="true">
-            <h4 class="modal-title">Add New Table</h4>
-        </modal-header>
-        <modal-body>
-            <label for="newTableName">Name</label>
-            <input type="text" class="form-control" id="newTableName" #newTableName required/>
-        </modal-body>
-        <modal-footer>
-            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Cancel</button>
-            <button type="submit" class="btn btn-default" [disabled]="!tableForm.form.valid">Create</button>
-        </modal-footer>
-    
-      </div>
-
-  </form>
-</modal> 

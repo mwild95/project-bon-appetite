@@ -30,11 +30,11 @@ export class Table {
 		this.name = _name;
 	}
 
-	public getCapacity () {
+	public getCapacity (){ 
 		if(this.capacity) {
 			return this.capacity;
 		}
-		return "N/A";
+		return undefined;
 		
 	}
 

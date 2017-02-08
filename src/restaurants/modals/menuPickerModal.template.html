@@ -1,0 +1,13 @@
+<h1 md-dialog-title>Select a Menu</h1>
+<div md-dialog-content>
+	
+<select md-input class="form-control" id="activeMenu" required [(ngModel)]="currentlySelectedMenu">
+    <option [ngValue]="null">No Menu</option>
+    <option *ngFor="let menu of menus" [ngValue]="menu">{{menu.name}}</option>
+</select>
+ 
+</div>
+<div md-dialog-actions>
+    <button md-button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+    <button md-button type="button" class="btn btn-default" (click)="submit()">Select</button>
+</div>

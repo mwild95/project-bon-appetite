@@ -8,7 +8,8 @@ export class Restaurant {
 	private name : string;
 	private menu : Menu;
 	private opening_times : OpeningTimes[];
-	private tables : Table[]
+	private tables : Table[];
+	private logo_url : string;
 
 	constructor ( private restaurantJSON: {} ) {
 		for( var jsonKey in this.restaurantJSON ) {
@@ -69,5 +70,17 @@ export class Restaurant {
 
 	public addTable ( _table : Table ) {
 		this.tables.push(_table);
+	}
+
+	public getTables( ) : Table[] {
+		return this.tables;
+	}
+
+	public setLogoUrl ( _url : string) {
+		this.logo_url = _url;
+	} 
+
+	public getLogoUrl ( ) : string {
+		return this.logo_url;
 	}
 }

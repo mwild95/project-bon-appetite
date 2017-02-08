@@ -1,0 +1,10 @@
+<h1 md-dialog-title>Add New Restaurant</h1>
+<div md-dialog-content>
+	<md-input-container class="example-full-width">
+    <input md-input placeholder="Name" type="text" [(ngModel)]="newRestaurantName" required>
+  </md-input-container>
+</div>
+<div md-dialog-actions>
+    <button md-button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+    <button md-button type="button" class="btn btn-default" (click)="submit()" [disabled]="!isValid()">Create</button>
+</div>
