@@ -248,9 +248,21 @@ export class RestService {
             .map( res => res.json() ); 
     }
 
-    public getOrders ( restaurantId : string, status : string ) : Observable<Order[]> {
+    public getOrders ( restaurantId : string ) : Observable<Order[]> {
         let endPoint : string = this.order_endpoint + this.single_restaurant_endpoint;
-        return this.http.get( this.rest_server + endPoint + restaurantId + "?status=" + status )
+        return this.http.get( this.rest_server + endPoint + restaurantId + "/all" )
+            .map( res => res.json() );
+    }
+
+    public getPendingOrders( restaurantId: string) : Observable<Order[]> {
+        let endPoint : string = this.order_endpoint + this.single_restaurant_endpoint;
+        return this.http.get( this.rest_server + endPoint + restaurantId + "/pending")
+            .map( res => res.json() );
+    }
+
+    public getCompleteOrders( restaurantId: string) : Observable<Order[]> {
+        let endPoint: string = this.order_endpoint + this.single_restaurant_endpoint;
+        return this.http.get( this.rest_server + endPoint + restaurantId + "/complete")
             .map( res => res.json() );
     }
 

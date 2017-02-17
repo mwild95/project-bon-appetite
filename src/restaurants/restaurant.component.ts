@@ -1,13 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MdDialog, MdDialogRef, MdTab } from '@angular/material';
 
 import { CacheService } from '../services/cache.service';
 import { MenuService } from '../services/menu.service';
 import { RestaurantsService } from '../services/restaurants.service';
 import { ImagesService } from '../services/images.service';
 import { ErrorService } from '../services/error.service';
+import { LocationService} from '../services/location.service';
 
 import { Restaurant } from '../classes/Restaurant';
 import { Menu } from '../classes/Menu';
@@ -24,9 +25,11 @@ import { AddTableModalComponent } from './modals/addTableModal.component';
 
 
 declare var $:any;
+declare var google:any;
 
 @Component({
-  templateUrl: './src/restaurants/restaurant.template.html'
+  templateUrl: './src/restaurants/restaurant.template.html',
+  styleUrls: ['./app/restaurants/restaurant.css']
 })
 
 export class RestaurantComponent { 
@@ -41,8 +44,18 @@ export class RestaurantComponent {
 
 	@ViewChild('logoImagePicker')
 	logoImagePicker: HTMLInputElement;
+
+	@ViewChild('mapView')
+	mapView: HTMLDivElement;
+
+	@ViewChild('LocationTab')
+	locationTab: MdTab;
+
+	mapElement;
+	markerElement;
 	
-	constructor ( private route : ActivatedRoute, private cache : CacheService, private router : Router, private MenuService : MenuService, private RestaurantsService: RestaurantsService, private imagesService: ImagesService, public dialog : MdDialog, private errorService : ErrorService ) {
+	constructor ( private route : ActivatedRoute, private cache : CacheService, private router : Router, private MenuService : MenuService, private RestaurantsService: RestaurantsService, private imagesService: ImagesService, public dialog : MdDialog, private errorService : ErrorService,
+	private locationService: LocationService ) {
 		
 	}
 
@@ -51,6 +64,7 @@ export class RestaurantComponent {
 		if( this.cache.get( id )){
 			this.restaurant = $.extend({}, this.cache.get( id ) );
 			this.currentlySelectedMenu = this.restaurant.getMenu();
+			this.initMap();
 		} else {
 			this.RestaurantsService.getRestaurant( id ).then(
 				(response : Restaurant ) => {
@@ -58,6 +72,8 @@ export class RestaurantComponent {
 					//this.restaurant = new Restaurant( this.originalRestaurant.getId(), this.originalRestaurant.getName() );
 					this.currentlySelectedMenu = this.restaurant.getMenu();
 					//TODO need to check for undefined and redirect to error page 
+
+					this.initMap();
 				},
 				err => {
 					alert(err.message);
@@ -71,6 +87,35 @@ export class RestaurantComponent {
 			( response ) => { this.availableMenus = response; },
 			( err ) => { alert(err.message); }
 		);
+	}
+
+	initMap(){
+		this.mapElement = new google.maps.Map(this.mapView.nativeElement, {
+          zoom: 15,
+          center: {lat: -34.397, lng: 150.644}
+        });
+        
+        
+
+        if(typeof this.restaurant.getLocation() != 'undefined'){
+        	//we already have a lat and long so we need to plot it on the map
+        	let myLatLng = new google.maps.LatLng({lat: this.restaurant.getLocation()[1], lng: this.restaurant.getLocation()[0]}); 
+        	this.plotMarker(myLatLng);
+
+
+        }	
+
+        
+	}
+
+	initMapResize(){
+		let myLatLng = new google.maps.LatLng({lat: this.restaurant.getLocation()[1], lng: this.restaurant.getLocation()[0]}); 
+		//This is being called too soon
+		//need to wait til the map is created
+		//google.maps.event.addListenerOnce(this.mapElement, 'idle', function() {
+   			google.maps.event.trigger(this.mapElement, 'resize');
+   			this.mapElement.setCenter(myLatLng);
+		//});
 	}
 
 	onSubmit () {
@@ -187,5 +232,40 @@ export class RestaurantComponent {
 				alert("Something went wrong with the image upload! Please try again");
 			}
 		);
+	}
+
+	performGeoCode(){
+		this.locationService.getLongAndLat(this.restaurant.getLocationNumberName(),
+			this.restaurant.getStreetName(),
+			this.restaurant.getCity(),
+			this.restaurant.getPostCode()).then(
+			(response : Object) => {
+
+				this.plotMarker(response.geometry.location);
+				this.restaurant.setLocation(response.geometry.location.lat(),response.geometry.location.lng());
+			}, 
+			err => {
+				alert(err);
+			}
+		);
+		
+	}
+
+	plotMarker(latLngObj : Object){
+		this.mapElement.setCenter(latLngObj);
+		if(this.markerElement){
+			this.markerElement.setMap(null);
+		}
+		this.markerElement = new google.maps.Marker({
+			map: this.mapElement,
+			position: latLngObj
+		});
+	}
+
+	tabChanged( e: event){
+		if(e.tab.textLabel == this.locationTab.textLabel){
+			//reload the map
+			this.initMapResize();
+		}
 	}
 }

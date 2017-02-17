@@ -33,7 +33,7 @@ export class PendingOrdersComponent {
 	ngOnInit () {
 		this.restaurantId = this.route.snapshot.parent.params['restaurantId'];
 
-		this.OrdersService.getOrders( this.restaurantId, OrderStatus[0] ).then(
+		this.OrdersService.getPendingOrders( this.restaurantId ).then(
 			(response) => {
 				this.orders = response;
 			},

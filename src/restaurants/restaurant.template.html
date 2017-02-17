@@ -1,20 +1,21 @@
-
+<div class="full-height>">
 <div class="top-panel-actions">
     <div class="titles">
         <h3 class="section-title">Manage - {{restaurant.name}}</h3>
     </div>
     <div class="right buttons">
-        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Delete <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
-        <button type="button" class="btn btn-default" (click)="onCancel()">Cancel <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+       
+        
         <button class="btn btn-default right" type="button" (click)="onSubmit()">Save <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+        <button type="button" class="btn btn-default right" (click)="onCancel()">Cancel <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+         <button type="button" class="btn btn-danger right" (click)="confirmDelete()">Delete <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
     </div>
 </div>
 
-<div class="container full-width">
+<div class="full-width panel-contents">
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-      <md-tab-group>
+      <md-tab-group class="full-height" (selectChange)="tabChanged($event)">
         <md-tab label="Overview">
-          <hr>
           <div class="col-lg-6 col-md-6 col-sm-12">
           <label for="rest_name">Restaurant Name</label>
           <input type="text" class="form-control" id="rest_name" [(ngModel)]="restaurant.name" name="rest_name" required>
@@ -91,15 +92,40 @@
 
 
         <md-tab label="Images">
-        <hr>
           <input type="file" #logoImagePicker /><button type="button" (click)="uploadImage()">Upload</button>
           <img [src]="restaurant.getLogoUrl()"/>
+        </md-tab>
+
+        <md-tab label="Location" #LocationTab>
+          
+          <div id="map" #mapView class="col-lg-6 col-md-6 col-sm-12 full-height"></div>
+         
+          <div class="col-lg-6 col-md-6 col-sm-12 full-height">
+            <md-input-container class="width-fifty">
+                <input name="location_numbername" md-input placeholder="House Number or Name" value="" [(ngModel)]="restaurant.location_numbername">
+            </md-input-container>
+            <md-input-container class="full-width">
+              <input name="street_name" md-input placeholder="Street Name" value="" [(ngModel)]="restaurant.street_name">
+            </md-input-container>
+            <md-input-container class="width-fifty">
+              <input name="city" md-input placeholder="City" value="" [(ngModel)]="restaurant.city">
+            </md-input-container>
+            <md-input-container class="width-fifty">
+              <input name="county" md-input placeholder="County" value="" [(ngModel)]="restaurant.county">
+            </md-input-container>
+            <md-input-container class="width-fifty">
+              <input name="post_code" md-input placeholder="Post Code" value="" [(ngModel)]="restaurant.post_code">
+            </md-input-container>
+            <button type="button" md-button (click)="performGeoCode()">Update</button>
+          </div>
+          <button type="button" (click)="initMapResize()"></button>
         </md-tab>
       </md-tab-group>
       
 
     </form>
     
+</div>
 </div>
 
 

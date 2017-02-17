@@ -34,6 +34,7 @@ import { OrdersService } from './services/orders.service';
 import { ImagesService } from './services/images.service';
 import { ErrorService } from './services/error.service';
 import { CanActivateViaUserService } from './guards/loggedin.guard';
+import { LocationService } from './services/location.service'; 
 
 import { AppComponent }  from './app.component';
 import { HomeComponent } from './home.component';
@@ -81,7 +82,8 @@ import { ErrorDialog } from './services/error.service';
                 SectionsService,
                 OrdersService,
                 ImagesService,
-                ErrorService
+                ErrorService,
+                LocationService
               ],
   entryComponents: [ErrorDialog],
   bootstrap:    [ AppComponent ]

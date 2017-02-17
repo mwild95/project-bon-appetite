@@ -10,6 +10,12 @@ export class Restaurant {
 	private opening_times : OpeningTimes[];
 	private tables : Table[];
 	private logo_url : string;
+	private location_numbername : string;
+	private street_name: string;
+	private city: string;
+	private post_code : string;
+	private county : string;
+	private loc : number[];
 
 	constructor ( private restaurantJSON: {} ) {
 		for( var jsonKey in this.restaurantJSON ) {
@@ -83,4 +89,53 @@ export class Restaurant {
 	public getLogoUrl ( ) : string {
 		return this.logo_url;
 	}
+
+	public getPostCode () : string {
+		return this.post_code;
+	}
+
+	public setPostCode( _post_code : string) {
+		this.post_code = _post_code;
+	}
+
+	public setLocation( _longitude : number, _latitude: number) {
+		this.loc = [_latitude, _longitude];
+	}
+
+	public getLocation() :  number[] {
+		return this.loc;
+	}
+
+	public getLocationNumberName() : string {
+		return this.location_numbername;
+	}
+
+	public setLocationNumberName(_location_numbername: string) {
+		this.location_numbername = _location_numbername;
+	}
+
+	public getStreetName() : string {
+		return this.street_name;
+	}
+
+	public setStreetName( _streetName : string) {
+		this.street_name = _streetName;
+	}
+
+	public getCity() : string {
+		return this.city;
+	}
+
+	public setCity( _city : string ) {
+		this.city = _city;
+	}
+
+	public getCounty() : string {
+		return this.county;
+	}
+
+	public setCounty( _county : string ) {
+		this.county = _county;
+	}
+
 }

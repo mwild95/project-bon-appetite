@@ -1,7 +1,7 @@
 module.exports = {
 	"REST_SERVER" 	: "http://35.164.11.97:3000/api/",
 
-	"APP_NAME"		: "Bon Appetite",
+	"APP_NAME"		: "Bon Appetit",
 
 	//Users
 	"USERS_ENDPOINT" : "users/",
