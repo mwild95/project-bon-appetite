@@ -46,6 +46,21 @@ export class OrdersService {
         //return this.mockOrders;
     }
 
+    public getPendingOrders( restaurantId: string ) : Promise<Order[]> {
+        return new Promise( (resolve, reject ) => {
+            this.restService.getPendingOrders( restaurantId )
+                .subscribe(
+                    ( response: Order[] ) => {
+                        this.orders = this.castOrders( response );
+                        resolve(response);
+                    },
+                    err => {
+                        reject(JSON.parse(err._body));
+                    }
+                );
+        });
+    }
+
     public createOrder ( orderName: string ) : Promise< Order >{
         return new Promise( (resolve, reject) => {
             this.restService.createOrder ( orderName, this.userService.getId() )

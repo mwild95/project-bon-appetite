@@ -49,6 +49,7 @@ export class PendingOrdersComponent {
 		this.OrdersService.updateOrder( order ).then(
 			(response) => {
 				console.log(response);
+				this.refreshOrders();
 				//TODO need to find it in the array of orders and update it
 			},
 			err => {alert(err);}

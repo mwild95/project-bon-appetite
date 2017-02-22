@@ -9,7 +9,23 @@
 </div>
 
 <div class="panel-contents">
-    <div *ngFor="let order of orders; let r = index;" class="col-lg-4 col-md-6 col-sm-12 order_container">
+    <md-card *ngFor="let order of orders; let r = index;" class="col-lg-4 col-md-6 col-sm-12">
+        <md-card-header>
+            <md-card-title>Order #{{r}}</md-card-title>
+            <md-card-subtitle>{{order.products.length}} Products</md-card-subtitle>
+        </md-card-header>
+        <md-card-content>
+            <h1>{{(moment.duration(today.getTime() - order.createdAt.getTime())).hours()}}:{{(moment.duration(today.getTime() - order.createdAt.getTime())).minutes()}}:{{(moment.duration(today.getTime() - order.createdAt.getTime())).seconds()}}</h1>
+            <h3 *ngFor="let product of order.products">{{product.name}}</h3>
+        </md-card-content>
+        <md-card-actions>
+            <button md-button (click)="changeStatus(0,order)">PENDING</button>
+            <button md-button (click)="changeStatus(1,order)">COOKING</button>
+            <button md-button (click)="changeStatus(2,order)">COMPLETE</button>
+            <button md-button (click)="changeStatus(3,order)">REJECT</button>
+        </md-card-actions>
+    </md-card>
+    <!--<div *ngFor="let order of orders; let r = index;" class="col-lg-4 col-md-6 col-sm-12 order_container">
     	<div class="inner-container">
     		<h1>{{order.status}}</h1>
     		<h1>{{(moment.duration(today.getTime() - order.createdAt.getTime())).hours()}}:{{(moment.duration(today.getTime() - order.createdAt.getTime())).minutes()}}:{{(moment.duration(today.getTime() - order.createdAt.getTime())).seconds()}}</h1>
@@ -25,5 +41,5 @@
     			
     		</div>
     	</div>
-    </div>
+    </div>-->
 </div>

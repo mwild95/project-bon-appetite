@@ -1,0 +1,19 @@
+<div class="full-width">
+	<h1>Choose a Restaurant</h1>
+	<div class="panel-contents">
+    <table class="table">
+        <tr>
+            <th class="col-lg-4">Name</th>
+            <th class="col-lg-4">Active Menu</th>
+            <th class="col-lg-4">Actions</th>
+        </tr>
+        <tr *ngFor="let restaurant of restaurants; let r = index;" (click)="navRestaurantOrders(restaurant)">
+            <td>{{restaurant.name}}</td>
+            <td *ngIf="restaurant.menu">{{restaurant.menu.name}}</td>
+            <td *ngIf="!restaurant.menu">N/A</td>
+            <td>
+                <button class="btn btn-default" type="button" (click)="navRestaurantOrders(restaurant)"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span></button>
+            </td>
+        </tr>
+    </table>
+</div>
