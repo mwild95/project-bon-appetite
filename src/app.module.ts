@@ -35,6 +35,7 @@ import { ImagesService } from './services/images.service';
 import { ErrorService } from './services/error.service';
 import { CanActivateViaUserService } from './guards/loggedin.guard';
 import { LocationService } from './services/location.service'; 
+import { ActivityService } from './services/activity.service';
 
 import { AppComponent }  from './app.component';
 import { HomeComponent } from './home.component';
@@ -83,7 +84,8 @@ import { ErrorDialog } from './services/error.service';
                 OrdersService,
                 ImagesService,
                 ErrorService,
-                LocationService
+                LocationService,
+                ActivityService
               ],
   entryComponents: [ErrorDialog],
   bootstrap:    [ AppComponent ]

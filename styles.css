@@ -39,8 +39,7 @@ div.panel-contents {
 
 .page-content {
   width: 100%;
-  height: calc(100% - 50px);
-  margin-top: -21px; }
+  height: calc(100% - 50px); }
 
 .section-title {
   margin-top: 10px; }
@@ -68,6 +67,9 @@ div.panel-contents {
 
 .width-fifty {
   width: 50%; }
+
+.width-forty-eight {
+  width: 48%; }
 
 .full-height {
   height: 100%; }
@@ -142,3 +144,12 @@ hr {
 
 .md-tab-body-content {
   padding-top: 10px; }
+
+div.md-card-header-text {
+  width: 100%; }
+
+md-card-title {
+  width: 100%; }
+
+.margin-fix {
+  margin-top: -20px; }

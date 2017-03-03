@@ -9,22 +9,49 @@
 </div>
 
 <div class="panel-contents">
-    <md-card *ngFor="let order of orders; let r = index;" class="col-lg-4 col-md-6 col-sm-12">
-        <md-card-header>
-            <md-card-title>Order #{{r}}</md-card-title>
-            <md-card-subtitle>{{order.products.length}} Products</md-card-subtitle>
-        </md-card-header>
-        <md-card-content>
-            <h1>{{(moment.duration(today.getTime() - order.createdAt.getTime())).hours()}}:{{(moment.duration(today.getTime() - order.createdAt.getTime())).minutes()}}:{{(moment.duration(today.getTime() - order.createdAt.getTime())).seconds()}}</h1>
-            <h3 *ngFor="let product of order.products">{{product.name}}</h3>
-        </md-card-content>
-        <md-card-actions>
-            <button md-button (click)="changeStatus(0,order)">PENDING</button>
-            <button md-button (click)="changeStatus(1,order)">COOKING</button>
-            <button md-button (click)="changeStatus(2,order)">COMPLETE</button>
-            <button md-button (click)="changeStatus(3,order)">REJECT</button>
-        </md-card-actions>
-    </md-card>
+    <div class="orders-scroller">
+    <div class="full-height display-inline-block col-lg-4 col-md-6 col-sm-12 order-container" *ngFor="let order of orders; let r = index;">
+            <md-card>
+                <md-card-header>
+                    <md-card-title>
+
+                        <div class="display-inline-block width-fifty">{{(order.table)?order.table.name:""}}</div>
+                        <div class="display-inline-block width-forty-eight"><div class="float-right">{{(moment.duration(today.getTime() - order.createdAt.getTime())).hours()}}:{{(moment.duration(today.getTime() - order.createdAt.getTime())).minutes()}}:{{(moment.duration(today.getTime() - order.createdAt.getTime())).seconds()}}</div></div>
+                    </md-card-title>
+                    <md-card-subtitle>{{order.products.length}} Products</md-card-subtitle>
+                </md-card-header>
+                <md-card-content>
+                    <md-list>
+                     <md-list-item *ngFor="let product of order.products">
+                     <table class="full-width">
+                        <tr>
+                            <td>{{product.name}}</td>
+                            <td><md-checkbox class="float-right"></md-checkbox></td>
+                        </tr>
+                     </table>
+                     </md-list-item>
+                    </md-list>
+                    <hr>
+                </md-card-content>
+                <md-card-footer>
+                    <!--<button md-button class="order_button" (click)="changeStatus(0,order)">PENDING</button>
+                    <button md-button class="order_button" (click)="changeStatus(1,order)">COOKING</button>
+                    <button md-button class="order_button" (click)="changeStatus(2,order)">COMPLETE</button>-->
+                    <md-button-toggle-group (change)="changeStatus($event,order)">
+                      <md-button-toggle value="PENDING" [checked]="order.status == 'PENDING'">
+                        PENDING
+                      </md-button-toggle>
+                      <md-button-toggle value="IN_PROGRESS" [checked]="order.status == 'IN_PROGRESS'">
+                        IN PROGRESS
+                      </md-button-toggle>
+                      <md-button-toggle value="COMPLETE" [checked]="order.status == 'COMPLETE'">
+                        COMPLETE
+                      </md-button-toggle>
+                    </md-button-toggle-group>
+                </md-card-footer>
+            </md-card>
+        </div>
+    </div>
     <!--<div *ngFor="let order of orders; let r = index;" class="col-lg-4 col-md-6 col-sm-12 order_container">
     	<div class="inner-container">
     		<h1>{{order.status}}</h1>

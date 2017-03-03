@@ -1,2 +1,2 @@
 # project-bon-appetite
-University Project
+University Project - Michael Wild

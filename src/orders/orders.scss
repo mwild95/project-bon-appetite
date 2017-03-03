@@ -22,3 +22,28 @@
 	}
 	
 }
+
+
+md-button-toggle{
+
+	&.active{
+		background-color: lighten($mainCol,10%);
+	}
+}
+
+md-card{
+	max-height: 96%;
+}
+
+.order-container{
+	height: 100%;
+	padding-top: $standardPadding;
+	padding-left: $standardPadding/2;
+	padding-right: $standardPadding/2;
+}
+
+.orders-scroller{
+	width:100%;
+	max-width:100%;
+	overflow-x: scroll;
+}

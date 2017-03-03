@@ -65,7 +65,7 @@ div.panel-contents{
 .page-content {
 	width:		100%;
 	height:		calc(100% - #{$navBarHeight});
-	margin-top:	-21px;
+	//margin-top:	-21px;
 }
 
 .section-title {
@@ -106,6 +106,10 @@ div.panel-contents{
 
 .width-fifty{
 	width:50%;
+}
+
+.width-forty-eight{
+	width: 48%;
 }
 
 .full-height {
@@ -216,4 +220,16 @@ hr {
 
 .md-tab-body-content {
 	padding-top : $standardPadding;
+}
+
+div.md-card-header-text{
+	width: 100%;
+}
+
+md-card-title{
+	width: 100%;
+}
+
+.margin-fix {
+	margin-top: -20px;
 }

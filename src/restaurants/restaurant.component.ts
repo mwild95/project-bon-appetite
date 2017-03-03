@@ -9,6 +9,7 @@ import { RestaurantsService } from '../services/restaurants.service';
 import { ImagesService } from '../services/images.service';
 import { ErrorService } from '../services/error.service';
 import { LocationService} from '../services/location.service';
+import { ActivityService } from '../services/activity.service';
 
 import { Restaurant } from '../classes/Restaurant';
 import { Menu } from '../classes/Menu';
@@ -55,7 +56,8 @@ export class RestaurantComponent {
 	markerElement;
 	
 	constructor ( private route : ActivatedRoute, private cache : CacheService, private router : Router, private MenuService : MenuService, private RestaurantsService: RestaurantsService, private imagesService: ImagesService, public dialog : MdDialog, private errorService : ErrorService,
-	private locationService: LocationService ) {
+	private locationService: LocationService,
+	private activityService: ActivityService ) {
 		
 	}
 
@@ -119,15 +121,17 @@ export class RestaurantComponent {
 	}
 
 	onSubmit () {
-
+		this.activityService.isLoading();
 		if(!this.restaurant.getMenu()) {
 			this.restaurant.setMenu(null);
 		}
 		//this.restaurant holds the edited values
 		//restaurants.service.update??
 		this.RestaurantsService.updateRestaurant(this.restaurant).then(
-			( response ) => { this.onFinish(); },
-			err => { alert(err.message); }
+			( response ) => { this.onFinish(); 
+				this.activityService.isFinished("Restaurant '" + this.restaurant.getName() + "' saved!");
+			},
+			err => { alert(err.message); this.activityService.isFinished();}
 		);
 		
 	}
